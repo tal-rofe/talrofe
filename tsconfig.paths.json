@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"paths": {
+			"@/providers/*": ["src/providers/*"],
+			"@/wrappers/*": ["src/wrappers/*"],
+			"@/types/*": ["src/types/*"],
+			"@/utils/*": ["src/utils/*"],
+			"@/routes/*": ["src/routes/*"],
+			"@/layouts/*": ["src/components/layouts/*"]
+		}
+	}
+}
