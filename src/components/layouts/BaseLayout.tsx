@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PageTransitionWrapper from '@/wrappers/PageTransitionWrapper';
+import Header from './Header';
 
 type PageProps = {
 	readonly children: React.ReactNode;
@@ -8,10 +9,9 @@ type PageProps = {
 
 const BaseLayout = (props: PageProps) => {
 	return (
-		<section className="flex items-start w-full h-full overflow-hidden">
-			<div className="flex flex-col w-full h-full">
-				<PageTransitionWrapper>{props.children}</PageTransitionWrapper>
-			</div>
+		<section className="flex h-full w-full flex-col overflow-hidden">
+			<Header />
+			<PageTransitionWrapper>{props.children}</PageTransitionWrapper>
 		</section>
 	);
 };

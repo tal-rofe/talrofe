@@ -8,9 +8,4 @@ const RootLayout = (props: Props) => {
 	return <BaseLayout>{props.children}</BaseLayout>;
 };
 
-export const metadata = {
-	title: 'Home',
-	description: 'Tal Rofe Website',
-};
-
 export default RootLayout;

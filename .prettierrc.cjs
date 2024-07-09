@@ -1,4 +1,5 @@
 const config = {
+	plugins: ['prettier-plugin-tailwindcss'],
 	tabWidth: 4,
 	printWidth: 150,
 	useTabs: true,

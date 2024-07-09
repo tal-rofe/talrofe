@@ -1,12 +1,13 @@
 {
 	"compilerOptions": {
 		"paths": {
-			"@/providers/*": ["src/providers/*"],
-			"@/wrappers/*": ["src/wrappers/*"],
-			"@/types/*": ["src/types/*"],
-			"@/utils/*": ["src/utils/*"],
+			"@/providers/*": ["src/lib/providers/*"],
+			"@/wrappers/*": ["src/components/wrappers/*"],
+			"@/types/*": ["src/lib/types/*"],
+			"@/utils/*": ["src/lib/utils/*"],
 			"@/routes/*": ["src/routes/*"],
-			"@/layouts/*": ["src/components/layouts/*"]
+			"@/layouts/*": ["src/components/layouts/*"],
+			"@/helpers/*": ["src/lib/helpers/*"]
 		}
 	}
 }
