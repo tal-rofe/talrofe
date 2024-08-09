@@ -146,3 +146,19 @@
 		background-position: 0% 50%;
 	}
 }
+
+::-webkit-scrollbar {
+	width: 80px;
+}
+
+::-webkit-scrollbar-track {
+	background: rgb(var(--blueSecondery));
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgb(var(--pinkPrimary));
+}
+
+*:hover::-webkit-scrollbar-thumb {
+	background: rgb(var(--pinkPrimary));
+}

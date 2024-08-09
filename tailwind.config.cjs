@@ -53,32 +53,14 @@ module.exports = {
 				sm: 'calc(var(--radius) - 4px)',
 			},
 			animation: {
-				'gradient-flow': 'gradient-flow 8s ease-in-out infinite', // New animation
-				'gradient': 'animatedgradient 6s ease infinite alternate',
+				gradient: 'animatedgradient 6s ease infinite alternate',
 			},
 			keyframes: {
-				'animatedgradient': {
+				animatedgradient: {
 					'0%': { backgroundPosition: '0% 50%' },
 					'50%': { backgroundPosition: '100% 50%' },
 					'100%': { backgroundPosition: '0% 50%' },
 				},
-				'backgroundSize': {
-					'300%': '300%',
-				},
-				'gradient-flow': {
-					'0%': {
-						'background-position': '0% 50%',
-					},
-					'50%': {
-						'background-position': '100% 50%',
-					},
-					'100%': {
-						'background-position': '0% 50%',
-					},
-				},
-			},
-			backgroundSize: {
-				'200%': '200% 200%', // Extend the background size for the flowing effect
 			},
 		},
 	},

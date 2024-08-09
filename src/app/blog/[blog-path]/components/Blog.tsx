@@ -24,13 +24,13 @@ const Blog = () => {
 	return (
 		<div className="flex flex-col items-center">
 			<div className="mb-3 flex items-center gap-3">
-				<span className="text-gray-400">{formatDate(blog.date)}</span>
-				<span className="text-gray-400">&minus;</span>
-				<span className="text-gray-400">{blog.readingTime}</span>
+				<span className="text-sm text-gray-400 sm:text-base">{formatDate(blog.date)}</span>
+				<span className="text-sm text-gray-400 sm:text-base">&minus;</span>
+				<span className="text-sm text-gray-400 sm:text-base">{blog.readingTime}</span>
 			</div>
-			<h2 className="mb-3 text-5xl font-bold">{blog.title}</h2>
-			<span className="mb-10 max-w-[600px] text-center text-xl text-gray-400">{blog.description}</span>
-			<ReactMarkdown remarkPlugins={[remarkGfm]} className="prose prose-xl dark:prose-invert">
+			<h2 className="mb-1 text-2xl font-bold sm:mb-3 sm:text-5xl">{blog.title}</h2>
+			<span className="mb-10 max-w-[600px] text-center text-lg text-gray-400 sm:text-xl">{blog.description}</span>
+			<ReactMarkdown remarkPlugins={[remarkGfm]} className="prose sm:prose-xl dark:prose-invert">
 				{blog.content}
 			</ReactMarkdown>
 		</div>
