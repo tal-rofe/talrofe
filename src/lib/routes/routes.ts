@@ -3,9 +3,9 @@ export const routes = {
 		path: '/',
 		title: 'Home',
 	},
-	apps: {
-		path: '/apps',
-		title: 'Apps',
+	myWork: {
+		path: '/my-work',
+		title: 'My Work',
 	},
 	about: {
 		path: '/about',
@@ -14,5 +14,9 @@ export const routes = {
 	blog: {
 		path: '/blog',
 		title: 'Blog',
+	},
+	contact: {
+		path: '/contact',
+		title: 'Contact',
 	},
 } as const;

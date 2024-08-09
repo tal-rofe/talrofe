@@ -14,14 +14,14 @@ const NavElement = (props: NavElementType) => {
 	if (props.path === routes.home.path) {
 		return (
 			<Link href={props.path} className={`px-4 py-2`}>
-				<span className="text-3xl font-bold text-foreground">{pathname === routes.home.path ? props.icon : 'Tal Rofe'}</span>
+				<span className="text-2xl font-bold text-foreground">{pathname === routes.home.path ? props.icon : 'Tal Rofe'}</span>
 			</Link>
 		);
 	}
 
 	return (
-		<Link href={props.path} className={`border-b-2 px-4 py-2 ${isActive && !props.icon ? 'border-b-green-500' : 'border-b-transparent'}`}>
-			<span className="text-xl text-accent-foreground">{props.icon ?? props.label}</span>
+		<Link href={props.path} className={`border-b-2 px-2 py-1 ${isActive && !props.icon ? 'border-b-green-500' : 'border-b-transparent'}`}>
+			<span className="text-base text-accent-foreground">{props.icon ?? props.label}</span>
 		</Link>
 	);
 };

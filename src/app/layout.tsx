@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-	title: 'Tal Rofe',
+	title: '🧀 Tal Rofe',
 	description: 'Tal Rofe Website',
 };
 
