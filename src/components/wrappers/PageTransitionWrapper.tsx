@@ -10,7 +10,7 @@ type Props = {
 const PageTransitionWrapper = (props: Props) => {
 	return (
 		<motion.div
-			className="w-ful h-[calc(100%-76px)] overflow-y-auto"
+			className="w-full overflow-hidden"
 			initial={{ y: 20, opacity: 0 }}
 			animate={{ y: 0, opacity: 1 }}
 			exit={{ opacity: 0 }}

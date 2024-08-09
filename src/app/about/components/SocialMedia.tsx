@@ -5,12 +5,12 @@ import React from 'react';
 const SocialMedia = () => {
 	return (
 		<div className="mt-10 flex flex-col">
-			<h2 className="mb-4 text-4xl font-bold text-foreground">Links</h2>
+			<h2 className="mb-2 text-xl font-bold text-foreground sm:mb-4 sm:text-4xl">Links</h2>
 			{socialMedia.map((socialMedia) => (
 				<Link
 					key={socialMedia.url}
 					href={socialMedia.url}
-					className="mb-3 w-fit text-xl underline decoration-blue-500 hover:decoration-blue-700 hover:decoration-[3px]"
+					className="mb-2 w-fit text-lg underline decoration-blue-500 hover:decoration-blue-700 hover:decoration-[3px] sm:mb-3 sm:text-xl"
 				>
 					<span>{socialMedia.label}</span>
 				</Link>
