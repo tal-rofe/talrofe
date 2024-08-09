@@ -1,12 +1,12 @@
 import React from 'react';
 
 import PageWrapper from '@/wrappers/PageWrapper';
-import Anton from './components/Anton';
+import Intro from './components/Intro';
 
 const Root = () => {
 	return (
-		<PageWrapper className="border-4 border-red-500">
-			<Anton />
+		<PageWrapper className="h-full items-center justify-center">
+			<Intro />
 		</PageWrapper>
 	);
 };

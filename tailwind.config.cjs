@@ -53,53 +53,34 @@ module.exports = {
 				sm: 'calc(var(--radius) - 4px)',
 			},
 			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.5s ease-out forwards',
-				'fade-out': 'fade-out 0.5s ease-in forwards',
-				'slide-in': 'slide-in 0.3s ease-in-out forwards',
-				'slide-out': 'slide-out 0.4s ease-out forwards',
-				'expand': 'expand 3s linear forwards',
+				'gradient-flow': 'gradient-flow 8s ease-in-out infinite', // New animation
+				'gradient': 'animatedgradient 6s ease infinite alternate',
 			},
 			keyframes: {
-				'accordion-down': {
-					from: { height: '0' },
-					to: { height: 'var(--radix-accordion-content-height)' },
+				'animatedgradient': {
+					'0%': { backgroundPosition: '0% 50%' },
+					'50%': { backgroundPosition: '100% 50%' },
+					'100%': { backgroundPosition: '0% 50%' },
 				},
-				'accordion-up': {
-					from: { height: 'var(--radix-accordion-content-height)' },
-					to: { height: '0' },
+				'backgroundSize': {
+					'300%': '300%',
 				},
-				'slide-in': {
-					'0%': { transform: 'translateX(100%)', opacity: 0 },
-					'100%': { transform: 'translateX(0)', opacity: 1 },
-				},
-				'slide-out': {
-					'0%': { transform: 'translateX(0)', opacity: 1 },
-					'30%': { transform: 'translateX(-20%)', opacity: 1 },
-					'100%': { transform: 'translateX(100%)', opacity: 0 },
-				},
-				'expand': {
-					'0%': { width: '0%' },
-					'100%': { width: '100%' },
-				},
-				'fade-in': {
-					'0%': { opacity: 0 },
-					'100%': { opacity: 1 },
-				},
-				'fade-out': {
-					'0%': { opacity: 1 },
-					'100%': { opacity: 0 },
+				'gradient-flow': {
+					'0%': {
+						'background-position': '0% 50%',
+					},
+					'50%': {
+						'background-position': '100% 50%',
+					},
+					'100%': {
+						'background-position': '0% 50%',
+					},
 				},
 			},
-			backgroundImage: {
-				onboarding: 'url("/images/onboarding-background.png")',
-				auth: 'linear-gradient(180deg, rgba(230, 230, 230, 0.30) 0%, rgba(226, 226, 226, 0.30) 100%)',
-			},
-			boxShadow: {
-				white: '3px 0px 22.9px 0px rgba(102, 102, 102, 0.10) inset',
+			backgroundSize: {
+				'200%': '200% 200%', // Extend the background size for the flowing effect
 			},
 		},
 	},
-	plugins: [require('tailwindcss-animate')],
+	plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 };
