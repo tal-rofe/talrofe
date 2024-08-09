@@ -1,7 +1,11 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 
 import PageTransitionWrapper from '@/wrappers/PageTransitionWrapper';
-import Header from './Header';
+
+const Header = dynamic(() => import('./Header'), {
+	ssr: false,
+});
 
 type PageProps = {
 	readonly children: React.ReactNode;
@@ -9,10 +13,12 @@ type PageProps = {
 
 const BaseLayout = (props: PageProps) => {
 	return (
-		<section className="flex h-full w-full flex-col overflow-hidden">
+		<>
 			<Header />
-			<PageTransitionWrapper>{props.children}</PageTransitionWrapper>
-		</section>
+			<section className="flex h-full w-full flex-col overflow-hidden">
+				<PageTransitionWrapper>{props.children}</PageTransitionWrapper>
+			</section>
+		</>
 	);
 };
 

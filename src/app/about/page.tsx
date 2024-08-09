@@ -1,0 +1,18 @@
+import React from 'react';
+
+import PageWrapper from '@/wrappers/PageWrapper';
+import Intro from './components/Intro';
+import SocialMedia from './components/SocialMedia';
+import GeneralLinks from './components/GeneralLinks';
+
+const About = () => {
+	return (
+		<PageWrapper>
+			<Intro />
+			<GeneralLinks />
+			<SocialMedia />
+		</PageWrapper>
+	);
+};
+
+export default React.memo(About);
