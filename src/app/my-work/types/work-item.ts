@@ -1,4 +1,5 @@
 export type WorkItem = {
+	readonly isHighlighted: boolean;
 	readonly title: string;
 	readonly description: string;
 	readonly link: string;
