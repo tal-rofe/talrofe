@@ -2,13 +2,13 @@ import React from 'react';
 
 import PageWrapper from '@/wrappers/PageWrapper';
 import Intro from './components/Intro';
-import SocialMedia from './components/SocialMedia';
+import Links from './components/Links';
 
 const About = () => {
 	return (
 		<PageWrapper>
 			<Intro />
-			<SocialMedia />
+			<Links />
 		</PageWrapper>
 	);
 };

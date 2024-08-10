@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-const SocialMedia = () => {
+const Links = () => {
 	return (
 		<div className="mt-5 flex flex-col">
 			<h2 className="mb-2 text-xl font-bold text-foreground sm:mb-4 sm:text-4xl">Links</h2>
@@ -37,4 +37,4 @@ const SocialMedia = () => {
 	);
 };
 
-export default React.memo(SocialMedia);
+export default React.memo(Links);

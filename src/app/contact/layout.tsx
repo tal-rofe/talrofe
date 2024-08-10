@@ -6,13 +6,13 @@ type Props = {
 	readonly children: React.ReactNode;
 };
 
-const MyWorkLayout = (props: Props) => {
+const AboutLayout = (props: Props) => {
 	return <BaseLayout>{props.children}</BaseLayout>;
 };
 
 export const metadata: Metadata = {
-	title: '🧀 My Work — Tal Rofe',
-	description: 'Tal Rofe Work',
+	title: '🧀 Contact — Tal Rofe',
+	description: 'Tal Rofe Contact',
 };
 
-export default MyWorkLayout;
+export default AboutLayout;

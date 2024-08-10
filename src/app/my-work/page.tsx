@@ -1,16 +1,15 @@
 import React from 'react';
 
 import PageWrapper from '@/wrappers/PageWrapper';
-import Intro from './components/Intro';
-import SocialMedia from './components/SocialMedia';
 
-const About = () => {
+import MyWork from './components/MyWork';
+
+const MyWorkPage = () => {
 	return (
-		<PageWrapper>
-			<Intro />
-			<SocialMedia />
+		<PageWrapper className="max-w-[1300px]">
+			<MyWork />
 		</PageWrapper>
 	);
 };
 
-export default React.memo(About);
+export default React.memo(MyWorkPage);

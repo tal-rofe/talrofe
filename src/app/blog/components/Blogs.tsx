@@ -1,16 +1,17 @@
 'use client';
 
-import { blogs } from '@/data/blogs';
-import { formatDate } from '@/utils/date';
 import Link from 'next/link';
 import React from 'react';
-import { routes } from 'src/lib/routes/routes';
+
+import { blogs } from '@/data/blogs';
+import { formatDate } from '@/utils/date';
+import { routes } from '@/routes/routes';
+
+const getBlogParams = (path: string) => {
+	return `${routes.blog.path}/${path}`;
+};
 
 const Blogs = () => {
-	const getBlogParams = (path: string) => {
-		return `${routes.blog.path}/${path}`;
-	};
-
 	return blogs.map((blog, index) => (
 		<div key={index} className="mb-14 flex flex-col items-start">
 			<Link

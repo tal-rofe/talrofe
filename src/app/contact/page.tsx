@@ -2,14 +2,14 @@ import React from 'react';
 
 import PageWrapper from '@/wrappers/PageWrapper';
 
-import Blogs from './components/Blogs';
+import Contact from './components/Contact';
 
-const Blog = () => {
+const ContactPage = () => {
 	return (
 		<PageWrapper>
-			<Blogs />
+			<Contact />
 		</PageWrapper>
 	);
 };
 
-export default React.memo(Blog);
+export default React.memo(ContactPage);

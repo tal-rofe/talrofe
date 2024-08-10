@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PageWrapper from '@/wrappers/PageWrapper';
+
 import Blog from './components/Blog';
 
 const BlogPage = () => {

@@ -1,0 +1,192 @@
+Today I will be introducing and using the Singleton Design Pattern, using Node.js (with TypeScript) and Express library.
+
+### First, Why would I need Singleton?
+
+Sometimes you need to make sure that you have one and only one instance of an object. This is where the singleton pattern can be useful. A singleton represents a single instance of an object. Only one can be created, no matter how many times the object is instantiated. If there’s already an instance, the singleton will create a new one.
+
+Let's take a look at some use cases that would be nice to be
+
+##### It is popular to use a database connection (like MongoDB) within a Node.js application. But where and how you should instantiate that connection?
+
+There are several ways to do it. You could just create a file dedicated for this connection that handles the connection for the database.
+
+##### It is popular to use logger library such as Winston. Where should you instantiate the logger and define it?
+
+Again - you could create a dedicated file to handle this whole thing.
+
+There are more use cases of course, depends on your application. But we can already see - we have 2 dedicated files to manage. What if it would grow? What if you want to have some logic with each? Then in my opinion the whole thing becomes complicated and makes your code dirty.
+
+### An optional solution
+
+Use a central singleton class for these global stuff to manage it in one place, well-organized.
+
+So we are going to create simple server that connects to MongoDB and logs some text to the console & external file. For this I'm gonna be using Typescript, because it makes the creation of the singleton class more easy, and besides that, why not?
+
+For this, let's create a file with arbitrary name: `server-global.ts`. So we know we will be using MongoDB and logging text. So let's install via `npm` the 3 packages: `mongoose`, `@types/mongoose`, `winstion`: `npm i mongoose winston`, `npm i -D @types/winston`.
+
+So let's first build a simple class `ServerGlobal` within the file we created:
+
+```ts
+import mongoose from 'mongoose';
+import winston from 'winston';
+
+class ServerGlobal {}
+
+export default ServerGlobal;
+```
+
+So what makes a class singleton? We should avoid creating more than 1 instance of the class somehow. Making the class constructor to private one would easily solve it - then you would not be able to instantiate the class at all outside the class.
+
+The problem is.. how the singleton instance is being created?
+So making the constructor private, does not mean you cannot instantiate the class within the class:
+
+```ts
+import mongoose from 'mongoose';
+import winston from 'winston';
+
+class ServerGlobal {
+	private static _instance: ServerGlobal;
+
+	private constructor() {}
+
+	static getInstance() {
+		if (this._instance) {
+			return this._instance;
+		}
+
+		this._instance = new ServerGlobal();
+		return this._instance;
+	}
+}
+
+export default ServerGlobal;
+```
+
+#### So what happened here?
+
+We manage the singleton instance within the class. Then we provide function, `getInstance`, to allow using the singleton outside the class. Both are static ones, because as I said - the class constructor is private. It means you cannot create instance of the class. So, we need to allow somehow get an instance. For this we have the `static`.
+
+We can already use the singleton now. If we create a dummy file, we would get the singleton with the following code:
+
+```ts
+import ServerGlobal from './server-global';
+
+const instance = ServerGlobal.getInstance();
+```
+
+Now let's manage the MongoDB connection and the winston logger setup. So we want to connect to MongoDB and setup the logger _ONLY ONCE_ - because, why would we want to establish connection or setup the logger twice?
+For this, we can utilize the class constructor. As we saw, the constructor would only run once because we only create 1 instance of the class.
+
+So first thing - let's connect to MongoDB using the mongoose package.
+
+```ts
+import mongoose from 'mongoose';
+
+import winston from 'winston';
+
+class ServerGlobal {
+	private static _instance: ServerGlobal;
+
+	private constructor() {
+		mongoose.connect(process.env.DB_ENDPOINT, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+			useCreateIndex: true,
+			useFindAndModify: false,
+		});
+	}
+
+	static getInstance() {
+		if (this._instance) {
+			return this._instance;
+		}
+
+		this._instance = new ServerGlobal();
+		return this._instance;
+	}
+}
+
+export default ServerGlobal;
+```
+
+That's all. But we missing one thing. What if the connection is either successfully setup or failed? We want to log it.
+For this we would use class property to hold the winston logger object, so we could use the logger in other places in the appliction:
+
+```ts
+import path from 'path';
+
+import mongoose from 'mongoose';
+import winston from 'winston';
+
+class ServerGlobal {
+	private readonly _logger: winston.Logger;
+
+	private static _instance: ServerGlobal;
+
+	private constructor() {
+		this._logger = winston.createLogger({
+			level: 'info',
+			format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
+			transports: [
+				new winston.transports.Console(),
+				new winston.transports.File({
+					filename: path.join(__dirname, '../logs.log'),
+					level: 'info',
+				}),
+			],
+		});
+
+		mongoose
+			.connect(process.env.DB_ENDPOINT, {
+				useNewUrlParser: true,
+				useUnifiedTopology: true,
+				useCreateIndex: true,
+				useFindAndModify: false,
+			})
+			.then(() => this._logger.info('MongoDB connection established successfully'))
+			.catch((e: mongoose.Error) => this._logger.error(`MongoDB connection failed with error: ${e}`));
+	}
+
+	static getInstance() {
+		if (this._instance) {
+			return this._instance;
+		}
+
+		this._instance = new ServerGlobal();
+		return this._instance;
+	}
+
+	public get logger() {
+		return this._logger;
+	}
+}
+
+export default ServerGlobal;
+```
+
+So now it's all setup. The only thing left is to create the singleton right when your server boots.
+So assume you have some `server.ts` file in which you boot the server, and you also want to log the boot and port. Then, the file would look something like this:
+
+```ts
+import http from 'http';
+
+import app from './app';
+import ServerGlobal from './server-global';
+
+const port = process.env.PORT;
+
+app.set('port', port);
+
+const server = http.createServer(app);
+
+// Init global set up
+ServerGlobal.getInstance();
+
+ServerGlobal.getInstance().logger.info(`Server is running on port ${process.env.PORT}`);
+```
+
+As you can see, In the last 2 lines, we created the singleton, then logged the port on which the server listen (Note that the first line is actually redundant).
+
+Finally, if you would like to log some actions also in your RestAPI controller, you could do it by simply importing the `ServerGlobal` and using its logger.
+
+##### I do recommend to take a look at the NestJS framework that also using this design pattern using its `Providers`.
