@@ -22,7 +22,7 @@ Use a central singleton class for these global stuff to manage it in one place, 
 
 So we are going to create simple server that connects to MongoDB and logs some text to the console & external file. For this I'm gonna be using Typescript, because it makes the creation of the singleton class more easy, and besides that, why not?
 
-For this, let's create a file with arbitrary name: `server-global.ts`. So we know we will be using MongoDB and logging text. So let's install via `npm` the 3 packages: `mongoose`, `@types/mongoose`, `winstion`: `npm i mongoose winston`, `npm i -D @types/winston`.
+For this, let's create a file with arbitrary name: `server-global.ts`. So we know we will be using MongoDB and logging text. So let's install via `npm` the 3 packages: `mongoose`, `@types/mongoose`, `winston`: `npm i mongoose winston`, `npm i -D @types/winston`.
 
 So let's first build a simple class `ServerGlobal` within the file we created:
 
@@ -110,7 +110,7 @@ export default ServerGlobal;
 ```
 
 That's all. But we missing one thing. What if the connection is either successfully setup or failed? We want to log it.
-For this we would use class property to hold the winston logger object, so we could use the logger in other places in the appliction:
+For this we would use class property to hold the winston logger object, so we could use the logger in other places in the application:
 
 ```ts
 import path from 'path';

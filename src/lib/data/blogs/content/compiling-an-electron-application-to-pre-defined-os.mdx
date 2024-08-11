@@ -1,0 +1,180 @@
+# Intro
+
+Electron.JS, in its main purpose - is for creating desktop applications using Javascript. Most popular way of doing so is using React & Node.js.
+
+I will introduce a code architecture for building scalable Electron application - and on the fly - compile the code on chosen OS platform.
+
+I am not going to focus on implementing it with an Electron application because there is no need for this tutorial, but you should know that the best application of this tutorial resides in Electron applications.
+
+We are going to code the application to both Darwin and Windows platforms in one workspace - but as we'll see, in compilation we will be compiling only one (chosen by us) platform code. Because in most cases, you will need to code a code for 2 (at-least) platforms. But, we of-course don't want any Darwin code for example to exist in Windows application (just an application size side-effect).
+
+# Design patterns
+
+When working in a team, design patterns become more and more important. Not only for well-structured code, but also for "easy-to-understand" code and scalability.
+Thus, we will be using the following: **Provider, Singleton, Factory**.
+
+# Code
+
+When building such Electron application, splitting the code is important.
+
+This is the code architecture I reckon on implementing:
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/2bovzji5k014pdkz91yq.png)
+
+Very basic one, not that advanced.
+
+### Short brief:
+
+You want to catch the IPC events coming from your Renderer process via the **Routers**. Then, send the event, by reading the "channel" name, to the proper controller. A **controller** is a function to handle messages from the Renderer process. Then, heavy workload should be coded in the **Providers**. A provider is the one to implement the underlying OS logic for example. This is the module I am going to focus on, because all the rest modules are irrelevant with this tutorial.
+
+# Code preparation
+
+So we are creating a dummy project, non-Electron one by the way. Simply create a folder for the project. Run `npm init -y`.
+We are going to use Typescript, Webpack in this project. So please install the following: `npm i -D typescript webpack webpack-cli ts-node ts-loader @types/webpack @types/node`.
+
+Next, init a `tsconfig.json` file by running `tsc --init`. We want to change it to the following:
+
+```js
+{
+    "compilerOptions": {
+      "outDir": "./dist/",
+      "noImplicitAny": true,
+      "module": "commonjs",
+      "target": "es5",
+      "jsx": "react",
+      "allowJs": true,
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+    }
+}
+```
+
+Now we want to utilize Webpack in our project, because this is a compilation tool for Javascript. So create the following file `webpack.config.ts`:
+
+```ts
+import webpack from 'webpack';
+
+const config: webpack.Configuration = {
+	resolve: {
+		extensions: ['.ts', '.js'],
+	},
+	module: {
+		rules: [{ test: /\.ts$/, use: 'ts-loader' }],
+	},
+	entry: './src/main.ts',
+	output: {
+		filename: 'bundle.js',
+		clean: true,
+	},
+	plugins: [
+		new webpack.NormalModuleReplacementPlugin(/darwin/, function (resource) {
+			resource.request = resource.request.replace(/darwin/, 'darwin');
+		}),
+	],
+	mode: 'production',
+};
+
+export default config;
+```
+
+The important thing to node is that we are using the `NormalModuleReplacementPlugin` plugin. It is a plugin which reads your `import` statements and replace it with whatever you want.
+At the moment, we are simply replacing any `import` statement with `darwin` string with the same string. Later we'll change it.
+
+# Provider Code
+
+Let's start. In the root folder, create a `.src` folder, and another one inside `src` called `factories`. The last will hold your factories classes. Each should be dedicated to well-defined big task. We create 1, so create a folder called `example` and create inside 4 files: `example.ts` (the factory), `example-provider.ts` (the provider), `example.darwin.ts` (code dedicated to the Darwin application), `example.windows.ts` ( code dedicated to the Windows application).
+
+The factory purpose is to returns us a Provider, which either instance of the Windows one or the Darwin one. That's because in the most cases the Darwin code is definitely different from the Windows one. So the factory purpose is to retrieve us the correct one, depending on the platform the code is actually being running.
+However, sometimes the underlying platforms may share some code. This is why we are going to define an abstract Provider.
+
+Begin with the factory:
+
+```ts
+import ExampleProvider from './example-provider';
+import UnderlyingProvider from './example.darwin';
+
+export default class ExampleFactory {
+	private static _instance: ExampleFactory;
+	private _provider: ExampleProvider;
+
+	private constructor() {
+		this._provider = new UnderlyingProvider();
+	}
+
+	static get instance() {
+		if (this.instance) {
+			return this._instance;
+		}
+
+		return (this._instance = new ExampleFactory());
+	}
+
+	public get provider() {
+		return this._provider;
+	}
+}
+```
+
+This is our singleton factory class. This is a class to be used with the same instance wide-application. You may want to allow\disable this feature, but in this tutorial I chose to implement is as a Singleton one.
+As you can see, it holds the provider. Currently, I import the provider from Darwin one. But later, we'll see how to change to the Windows one.
+
+Let's take a look in the abstract Provider:
+
+```ts
+export default abstract class ExampleProvider {
+	protected abstract executeCodeImpl(): void;
+
+	public executeCode() {
+		console.log('Hello world - I am shared code');
+
+		this.executeCodeImpl();
+	}
+}
+```
+
+**The reason we have this classes is important:**
+**1. To have a shared platforms code. In this example the `console.log` is shared code which will be executed in both platforms.**
+**2. To FORCE the developers to have same "idea" regarding the code. Think- obviously we want the 2 implementations (Windows and Darwin) to do the same task, but in the platform specific ways.**
+
+Using abstract class is great way to accomplish these 2 missions.
+
+Let's take a look at the Windows provider:
+
+```ts
+import ExampleProvider from './example-provider';
+
+export default class ExampleWindows extends ExampleProvider {
+	protected executeCodeImpl() {
+		console.log('Hello from Windows..');
+	}
+}
+```
+
+And the Darwin one:
+
+```ts
+import ExampleProvider from './example-provider';
+
+export default class ExampleDarwin extends ExampleProvider {
+	protected executeCodeImpl() {
+		console.log('Hello from Darwin..');
+	}
+}
+```
+
+That's all. Now, wherever you want to execute the platform specific code anywhere outside of the `factories` folder, like in some arbitrary file `try.ts` just code:
+
+```ts
+import ExampleFactory from './factories/example/example';
+
+ExampleFactory.instance.provider.executeCode();
+```
+
+### What about compiling to the correct platform?
+
+That's easy. You want Darwin? go to the `webpack.config.ts` and make sure, via the `NormalModuleReplacementPlugin` plugin, you chose the `darwin` imports. Same for Windows. Just change to replace all `darwin` imports statements with Windows ones by changing the replaced string to `windows` in the example up above I've provided.
+
+`npm run build` and have fun. You have a bundle file compiled to whatever platform code you want, **Without the second platform code**.
+
+References:
+https://webpack.js.org/plugins/normal-module-replacement-plugin/

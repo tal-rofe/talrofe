@@ -1,3 +1,14 @@
 {
-	"language": "en"
+	"language": "en",
+	"ignoreWords": ["exlint", "kynesis", "animatedgradient", "rofe", "sourcerer", "inflint", "toploader"],
+	"ignorePaths": [
+		"renovate.json",
+		"pnpm-lock.yaml",
+		"package.json",
+		"lint-staged.config.cjs",
+		"knip.json",
+		"czvinyl.config.ts",
+		"next.config.js",
+		"cspell.json"
+	]
 }

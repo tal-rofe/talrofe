@@ -70,10 +70,6 @@ const config = {
 						return [false, "header must be in format '<type>: <emoji?> <ticket?> <subject>\nexample => ci: 🚀 [V-123] example\n"];
 					}
 
-					if (emptyCommitTicketIdRegex.test(header)) {
-						return [false, 'ticket ID must not be empty (or 00..0)\n'];
-					}
-
 					return [true, ''];
 				},
 				'explained-emoji-enum': (parsed, _when, commitTypes) => {

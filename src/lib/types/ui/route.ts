@@ -2,7 +2,7 @@ import { routes } from '../../routes/routes';
 
 type Routes = typeof routes;
 
-export type Route = {
+type Route = {
 	readonly path: string;
 	readonly title: string;
 };

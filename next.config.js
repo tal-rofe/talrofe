@@ -1,5 +1,6 @@
 import withMDX from '@next/mdx';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -8,7 +9,7 @@ const nextConfig = {
 		tsconfigPath: './tsconfig.build.json',
 	},
 	compiler: {
-		removeConsole: true,
+		removeConsole: false,
 		reactRemoveProperties: true,
 	},
 	pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
@@ -18,6 +19,7 @@ const nextConfig = {
 const mdxConfig = {
 	options: {
 		remarkPlugins: [remarkGfm],
+		rehypePlugins: [rehypeRaw],
 	},
 };
 

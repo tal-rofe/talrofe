@@ -1,4 +1,16 @@
 {
 	"$schema": "./node_modules/knip/schema.json",
-	"ignoreBinaries": ["only-allow", "terraform"]
+	"ignoreBinaries": ["only-allow", "terraform"],
+	"ignoreDependencies": [
+		"postcss-nesting",
+		"pnpm",
+		"commitizen",
+		"@types/react-syntax-highlighter",
+		"@commitlint/cli",
+		"prismjs",
+		"react-syntax-highlighter",
+		"@types/mdx"
+	],
+	"project": ["./src/**/*"],
+	"ignore": ["./src/mdx-components.tsx"]
 }
