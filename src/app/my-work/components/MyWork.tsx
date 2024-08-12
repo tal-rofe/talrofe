@@ -18,7 +18,7 @@ const MyWork = () => {
 					{workItem.isHighlighted && <MdStars size="40" className="absolute -left-4 -top-4" />}
 					{workItem.imageFileName && (
 						<div className="mr-2 flex-initial flex-shrink-0 justify-center sm:mr-3">
-							<Image src={`/images/${workItem.imageFileName}`} width="75" height="75" alt={workItem.title} />
+							<Image className="rounded-lg" src={`/images/${workItem.imageFileName}`} width="75" height="75" alt={workItem.title} />
 						</div>
 					)}
 					<div className="my-3 mr-2 flex flex-col justify-center sm:mt-[-1px]">
