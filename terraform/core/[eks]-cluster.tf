@@ -4,8 +4,8 @@ module "eks_cluster_website" {
 
   cluster_name                   = "${var.project}-EKS-Cluster-Website"
   cluster_version                = "1.30"
-  subnet_ids                     = module.vpc.private_subnets
-  vpc_id                         = module.vpc.vpc_id
+  subnet_ids                     = module.vpc_website.private_subnets
+  vpc_id                         = module.vpc_website.vpc_id
   cluster_endpoint_public_access = true
   create_cloudwatch_log_group    = false
 
