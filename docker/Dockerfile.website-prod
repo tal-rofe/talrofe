@@ -12,4 +12,6 @@ RUN pnpm i --ignore-scripts
 COPY ./tsconfig.base.json ./
 COPY ./ ./
 
-CMD ["pnpm", "build"]
+RUN pnpm build
+
+CMD ["pnpm", "start:prod"]
