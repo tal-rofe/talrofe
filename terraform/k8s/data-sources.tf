@@ -1,5 +1,5 @@
 data "aws_eks_cluster" "website" {
-  name = "${var.project}-EKS-Cluster-Website"
+  name = "website"
 }
 
 data "aws_eks_cluster_auth" "website" {

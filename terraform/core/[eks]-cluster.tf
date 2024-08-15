@@ -2,7 +2,7 @@ module "eks_cluster_website" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.21.0"
 
-  cluster_name                   = "${var.project}-EKS-Cluster-Website"
+  cluster_name                   = "website"
   cluster_version                = "1.30"
   subnet_ids                     = module.vpc_website.private_subnets
   vpc_id                         = module.vpc_website.vpc_id
@@ -25,7 +25,7 @@ module "eks_cluster_website" {
   tags = merge(
     var.common_tags,
     {
-      Name = "${var.project}-EKS-Cluster-Website",
+      Name = "website",
     }
   )
 }
