@@ -8,7 +8,9 @@
 			"@/routes/*": ["src/lib/routes/*"],
 			"@/layouts/*": ["src/components/layouts/*"],
 			"@/helpers/*": ["src/lib/helpers/*"],
-			"@/data/*": ["src/lib/data/*"]
+			"@/data/*": ["src/lib/data/*"],
+			"@/ui/*": ["src/components/ui/*"],
+			"@/assets/*": ["src/assets/*"]
 		}
 	}
 }

@@ -5,7 +5,6 @@ export const headerNavigationElements: NavElement[] = [
 	{
 		label: routes.home.title,
 		path: routes.home.path,
-		icon: '🧀',
 	},
 	{
 		label: routes.about.title,
@@ -22,5 +21,6 @@ export const headerNavigationElements: NavElement[] = [
 	{
 		label: routes.contact.title,
 		path: routes.contact.path,
+		icon: 'contact',
 	},
 ];
