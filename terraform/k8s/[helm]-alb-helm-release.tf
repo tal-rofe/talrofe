@@ -28,6 +28,6 @@ resource "helm_release" "ingress" {
 
   depends_on = [
     aws_iam_role_policy_attachment.alb_policy_attachment,
-    aws_iam_policy.alb_controller_policy
+    aws_iam_policy.alb_controller
   ]
 }
