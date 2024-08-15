@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY ./package.json ./.npmrc ./
 
-RUN pnpm i
+RUN pnpm i --ignore-scripts
 
 COPY ./tsconfig.base.json ./
 COPY ./ ./
