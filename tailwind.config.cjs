@@ -54,6 +54,11 @@ module.exports = {
 			},
 			animation: {
 				gradient: 'animatedgradient 6s ease infinite alternate',
+				shimmer: 'shimmer 2s linear infinite',
+				expand: 'expand 0.5s ease-in-out forwards',
+				collapse: 'collapse 0.5s ease-in-out forwards',
+				fadeIn: 'fadeIn 0.5s ease-in-out forwards',
+				fadeOut: 'fadeOut 0.5s ease-in-out forwards',
 			},
 			keyframes: {
 				animatedgradient: {
@@ -61,6 +66,47 @@ module.exports = {
 					'50%': { backgroundPosition: '100% 50%' },
 					'100%': { backgroundPosition: '0% 50%' },
 				},
+				shimmer: {
+					from: {
+						backgroundPosition: '0 0',
+					},
+					to: {
+						backgroundPosition: '-200% 0',
+					},
+				},
+				expand: {
+					'0%': {
+						'transform': 'scale(0)',
+						'border-bottom-left-radius': '9999px',
+					},
+					'100%': {
+						'transform': 'scale(50)',
+						'border-bottom-left-radius': '0px',
+					},
+				},
+				collapse: {
+					'0%': {
+						'transform': 'scale(50)',
+						'border-bottom-left-radius': '0px',
+					},
+					'100%': {
+						'transform': 'scale(0)',
+						'border-bottom-left-radius': '9999px',
+					},
+				},
+				fadeIn: {
+					'0%': { opacity: 0 },
+					'100%': { opacity: 1 },
+				},
+				fadeOut: {
+					'0%': { opacity: 1 },
+					'100%': { opacity: 0 },
+				},
+			},
+			screens: {
+				xs: '380px',
+				xxs: '280px',
+				xxxs: '180px',
 			},
 		},
 	},
