@@ -23,7 +23,7 @@ resource "helm_release" "ingress" {
 
   set {
     name  = "clusterName"
-    value = "website"
+    value = data.aws_eks_cluster.website.name
   }
 
   depends_on = [
