@@ -108,4 +108,4 @@ jobs:
 
             - name: Terraform K8s apply
               working-directory: terraform/k8s
-              run: terraform apply state.tfplan
+              run: terraform apply state.tfplan -lock=false
