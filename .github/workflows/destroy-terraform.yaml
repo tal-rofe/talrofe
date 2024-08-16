@@ -54,7 +54,7 @@ jobs:
               working-directory: terraform/k8s
               env:
                   TF_VAR_website_docker_image_tag: ${{ steps.package-version.outputs.current-version }}-${{ github.sha }}
-              run: terraform destroy -auto-approve
+              run: terraform destroy -auto-approve -lock=false
 
             - name: Terraform core init
               working-directory: terraform/core
