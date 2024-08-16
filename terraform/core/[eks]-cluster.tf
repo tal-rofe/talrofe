@@ -2,7 +2,7 @@ module "eks_cluster_website" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.21.0"
 
-  cluster_name                   = "website"
+  cluster_name                   = locals.eks_cluster_name
   cluster_version                = "1.30"
   subnet_ids                     = module.vpc_website.private_subnets
   vpc_id                         = module.vpc_website.vpc_id
