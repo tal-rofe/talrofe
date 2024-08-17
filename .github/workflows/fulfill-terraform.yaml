@@ -8,6 +8,7 @@ on:
             - ./terraform/**
             - ./.dockerignore
             - ./docker/Dockerfile.website-prod
+            - ./src/**
 
 jobs:
     fulfill_terraform:
