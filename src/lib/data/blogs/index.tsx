@@ -2,6 +2,7 @@ import type { Blog } from '@/types/ui/blog';
 
 import SingletonDesignPatternUseCaseWithNodeJsTypescriptExpressJsMdx from './content/singleton-design-pattern-use-case-with-node-js-typescript-express-js.mdx';
 import CompilingAnElectronApplicationToPreDefinedOsMdx from './content/compiling-an-electron-application-to-pre-defined-os.mdx';
+import ReactCreateYoutubeLikeLoaderWhenRoutingWithoutScreenFlickering from './content/react-create-youtube-like-loader-when-routing-without-screen-flickering.mdx';
 
 export const blogs: Blog[] = [
 	{
@@ -15,9 +16,17 @@ export const blogs: Blog[] = [
 	{
 		path: 'compiling-an-electron-application-to-pre-defined-os',
 		title: 'Compiling an Electron application code only to the underlying OS code',
-		description: 'This article shows how to compile an Electron application to OS code, ',
+		description: 'This article shows how to compile an Electron application to OS code',
 		date: new Date('2021-11-20'),
 		readingTime: '10 min read',
 		contentElement: <CompilingAnElectronApplicationToPreDefinedOsMdx />,
 	},
-];
+	{
+		path: 'react-create-youtube-like-loader-when-routing-without-screen-flickering',
+		title: 'React: Create YouTube-like loader when routing without screen flickering',
+		description: 'Create page-transition loader, including async data fetching',
+		date: new Date('2023-04-27'),
+		readingTime: '10 min read',
+		contentElement: <ReactCreateYoutubeLikeLoaderWhenRoutingWithoutScreenFlickering />,
+	},
+].sort((a, b) => b.date.getTime() - a.date.getTime());

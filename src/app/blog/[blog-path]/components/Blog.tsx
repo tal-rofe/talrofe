@@ -28,7 +28,7 @@ const Blog = () => {
 			</div>
 			<h2 className="mb-1 text-2xl font-bold sm:mb-3 sm:text-5xl">{blog.title}</h2>
 			<span className="mb-10 max-w-[600px] text-center text-lg text-gray-400 sm:text-xl">{blog.description}</span>
-			<div className="w-full">{blog.contentElement}</div>
+			<div className="flex w-full flex-col">{blog.contentElement}</div>
 		</div>
 	);
 };

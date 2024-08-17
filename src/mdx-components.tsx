@@ -8,6 +8,7 @@ export const useMDXComponents = (components: MDXComponents): MDXComponents => {
 
 	return {
 		img: ({ src }) => <img className="my-3" src={src} />,
+
 		code: ({ children, className }) => {
 			const match = /language-(\w+)/.exec(className || '');
 
@@ -19,11 +20,21 @@ export const useMDXComponents = (components: MDXComponents): MDXComponents => {
 				<code className={className}>{children}</code>
 			);
 		},
+
 		h1: ({ children }) => <h1 className="my-2 text-5xl font-bold">{children}</h1>,
 		h2: ({ children }) => <h2 className="my-2 text-4xl font-bold">{children}</h2>,
 		h3: ({ children }) => <h3 className="my-2 text-3xl font-bold">{children}</h3>,
 		h4: ({ children }) => <h4 className="my-2 text-2xl font-bold">{children}</h4>,
 		h5: ({ children }) => <h5 className="my-2 text-xl font-bold">{children}</h5>,
+
+		hr: () => <hr className="my-4 h-1 w-52 self-center rounded-md border-none bg-stone-400" />,
+
+		a: ({ children, href }) => (
+			<a href={href} className="underline hover:text-sky-700">
+				{children}
+			</a>
+		),
+
 		...components,
 	};
 };
