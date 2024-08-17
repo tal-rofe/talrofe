@@ -1,4 +1,4 @@
-export type WorkItem = {
+export type ProjectItem = {
 	readonly isHighlighted: boolean;
 	readonly title: string;
 	readonly description: string;

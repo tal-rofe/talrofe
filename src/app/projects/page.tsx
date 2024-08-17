@@ -2,14 +2,14 @@ import React from 'react';
 
 import PageWrapper from '@/wrappers/PageWrapper';
 
-import MyWork from './components/MyWork';
+import Projects from './components/Projects';
 
-const MyWorkPage = () => {
+const ProjectsPage = () => {
 	return (
 		<PageWrapper className="max-w-[1300px]">
-			<MyWork />
+			<Projects />
 		</PageWrapper>
 	);
 };
 
-export default React.memo(MyWorkPage);
+export default React.memo(ProjectsPage);
