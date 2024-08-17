@@ -32,7 +32,7 @@ resource "kubernetes_deployment_v1" "website" {
 
           liveness_probe {
             http_get {
-              path = "/health/version"
+              path = "/"
               port = 80
             }
 

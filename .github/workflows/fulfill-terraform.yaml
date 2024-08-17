@@ -2,6 +2,12 @@ name: Fulfill Terrafrom
 
 on:
     workflow_dispatch:
+    push:
+        branches: main
+        paths:
+            - ./terraform/**
+            - ./.dockerignore
+            - ./docker/Dockerfile.website-prod
 
 jobs:
     fulfill_terraform:
