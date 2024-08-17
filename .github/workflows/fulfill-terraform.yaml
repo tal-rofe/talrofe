@@ -14,7 +14,6 @@ jobs:
     fulfill_terraform:
         name: Fulfill Terraform
         runs-on: ubuntu-latest
-        if: github.actor == 'tal-rofe'
         env:
             AWS_REGION: ${{ vars.AWS_REGION }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
