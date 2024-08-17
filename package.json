@@ -58,7 +58,7 @@
 		"is-docker": "3.0.0",
 		"knip": "5.23.1",
 		"lint-staged": "15.2.7",
-		"npm-run-all2": "6.2.0",
+		"npm-run-all2": "6.2.2",
 		"pnpm": "9.4.0",
 		"postcss": "8.4.41",
 		"postcss-import": "16.1.0",
