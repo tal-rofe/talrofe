@@ -1,4 +1,4 @@
-import { UIGradienteText } from '@/ui/UIGradienteText';
+import { UIGradientText } from '@/ui/UIGradientText';
 import Link from 'next/link';
 import React from 'react';
 import { IoIosMail } from 'react-icons/io';
@@ -10,9 +10,9 @@ const Contact = () => {
 			<div className="flex flex-row items-center">
 				<IoIosMail className="mr-2" size="40" />
 				<Link href="mailto:talrofe111@gmail.com" className="inline-block w-min">
-					<UIGradienteText as="h2" className="h-8 w-min text-2xl sm:h-12 sm:text-4xl">
+					<UIGradientText as="h2" className="h-8 w-min text-2xl sm:h-12 sm:text-4xl">
 						talrofe111@gmail.com
-					</UIGradienteText>
+					</UIGradientText>
 				</Link>
 			</div>
 		</div>

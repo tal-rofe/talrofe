@@ -1,6 +1,6 @@
 {
 	"language": "en",
-	"ignoreWords": ["exlint", "kynesis", "animatedgradient", "rofe", "sourcerer", "inflint", "toploader"],
+	"ignoreWords": ["exlint", "kynesis", "animatedgradient", "rofe", "sourcerer", "inflint", "toploader", "xxxs"],
 	"ignorePaths": [
 		"renovate.json",
 		"pnpm-lock.yaml",
@@ -9,6 +9,8 @@
 		"knip.json",
 		"czvinyl.config.ts",
 		"next.config.js",
-		"cspell.json"
+		"cspell.json",
+		"terraform",
+		"docker"
 	]
 }

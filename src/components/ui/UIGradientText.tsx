@@ -8,7 +8,7 @@ type Props<T extends AsProp = 'h1'> = {
 	readonly as?: T;
 } & (T extends 'svg' | 'symbol' ? React.SVGProps<SVGElement> : React.HTMLAttributes<HTMLElement>);
 
-export const UIGradienteText = <T extends AsProp = 'h1'>({ as = 'h1' as T, children, className, ...rest }: Props<T>) => {
+export const UIGradientText = <T extends AsProp = 'h1'>({ as = 'h1' as T, children, className, ...rest }: Props<T>) => {
 	const Component = as as React.ElementType;
 
 	return (

@@ -1,0 +1,121 @@
+name: Integration
+
+on:
+    pull_request:
+        branches: [main]
+
+permissions:
+    contents: read
+
+jobs:
+    knip:
+        name: Knip
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: '.nvmrc'
+
+            - uses: pnpm/action-setup@v3
+              with:
+                  run_install: true
+
+            - name: Run Knip
+              run: pnpm knip
+
+    typescript:
+        name: TypeScript
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: '.nvmrc'
+
+            - uses: pnpm/action-setup@v3
+              with:
+                  run_install: true
+
+            - name: Run TypeScript
+              run: pnpm run type-check
+
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: '.nvmrc'
+
+            - uses: pnpm/action-setup@v3
+              with:
+                  run_install: true
+
+            - name: Run build
+              run: pnpm build
+
+    cspell:
+        name: CSpell
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: '.nvmrc'
+
+            - uses: pnpm/action-setup@v3
+              with:
+                  run_install: true
+
+            - name: Run CSpell
+              run: pnpm cspell
+
+    prettier:
+        name: Prettier
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: '.nvmrc'
+
+            - uses: pnpm/action-setup@v3
+              with:
+                  run_install: true
+
+            - name: Run Prettier
+              run: pnpm prettier
+
+    tflint:
+        name: TFLint
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: terraform-linters/setup-tflint@v4
+              name: Setup TFLint
+              with:
+                  tflint_version: v0.50.3
+
+            - name: Init TFLint
+              working-directory: terraform
+              run: tflint --init
+              env:
+                  GITHUB_TOKEN: ${{ github.token }}
+
+            - name: Run TFLint
+              working-directory: terraform
+              run: tflint -f compact

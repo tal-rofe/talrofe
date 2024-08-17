@@ -3,14 +3,14 @@ import Link from 'next/link';
 import React from 'react';
 import { IoLogoGithub } from 'react-icons/io5';
 import { IoLogoLinkedin } from 'react-icons/io5';
-import { UIGradienteText } from '@/ui/UIGradienteText';
+import { UIGradientText } from '@/ui/UIGradientText';
 
 const Intro = () => {
 	return (
 		<div className="flex h-full flex-col items-center">
 			<Image src="/images/profile.jpg" alt="Profile Picture" width="150" height="150" className="mb-10 rounded-full" />
 
-			<UIGradienteText as="h1">Tal Rofe</UIGradienteText>
+			<UIGradientText as="h1">Tal Rofe</UIGradientText>
 
 			<span className="text-center text-xl text-gray-400 sm:text-3xl">Software Developer & Open-Sourcerer</span>
 			<div className="mt-4 flex items-center gap-4 sm:mt-6">
