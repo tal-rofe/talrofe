@@ -22,6 +22,8 @@
 		"cspell": "cspell lint -c ./cspell.json --gitignore --no-progress --no-summary **"
 	},
 	"dependencies": {
+		"@react-three/drei": "9.111.1",
+		"@react-three/fiber": "8.17.5",
 		"@tailwindcss/typography": "0.5.14",
 		"ag-grid-community": "31.3.2",
 		"clsx": "2.1.1",
@@ -35,7 +37,9 @@
 		"react-syntax-highlighter": "15.5.0",
 		"remark-gfm": "4.0.0",
 		"tailwind-merge": "2.3.0",
-		"tailwindcss-animate": "1.0.7"
+		"tailwindcss-animate": "1.0.7",
+		"three": "0.167.1",
+		"three-globe": "2.31.1"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "19.3.0",
@@ -47,6 +51,7 @@
 		"@types/react": "18.3.3",
 		"@types/react-dom": "18.3.0",
 		"@types/react-syntax-highlighter": "15.5.13",
+		"@types/three": "0.167.1",
 		"autoprefixer": "10.4.19",
 		"commitizen": "4.3.0",
 		"commitlint": "19.3.0",

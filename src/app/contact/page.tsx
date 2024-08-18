@@ -6,7 +6,7 @@ import Contact from './components/Contact';
 
 const ContactPage = () => {
 	return (
-		<PageWrapper>
+		<PageWrapper className="flex flex-col items-center" wrapperClassName="pt-28">
 			<Contact />
 		</PageWrapper>
 	);

@@ -4,12 +4,18 @@ import React from 'react';
 import { IoLogoGithub } from 'react-icons/io5';
 import { IoLogoLinkedin } from 'react-icons/io5';
 import { UIGradientText } from '@/ui/UIGradientText';
+import { UIHoverBorderGradient } from '@/ui/UIHoverBorderGradient';
 
 const Intro = () => {
 	return (
 		<div className="flex h-full flex-col items-center">
-			<Image src="/images/profile.jpg" alt="Profile Picture" width="150" height="150" className="mb-10 rounded-full" />
-
+			<UIHoverBorderGradient
+				containerClassName="rounded-full"
+				as="div"
+				className="z-20 flex items-center justify-center bg-white p-0 text-black dark:bg-black dark:text-white"
+			>
+				<Image src="/images/profile.jpg" alt="Profile Picture" width="150" height="150" className="rounded-full" />
+			</UIHoverBorderGradient>
 			<UIGradientText as="h1">Tal Rofe</UIGradientText>
 
 			<span className="text-center text-xl text-gray-400 sm:text-3xl">Software Developer & Open-Sourcerer</span>
