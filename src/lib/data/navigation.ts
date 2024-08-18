@@ -11,8 +11,8 @@ export const headerNavigationElements: NavElement[] = [
 		path: routes.about.path,
 	},
 	{
-		label: routes.myWork.title,
-		path: routes.myWork.path,
+		label: routes.projects.title,
+		path: routes.projects.path,
 	},
 	{
 		label: routes.blog.title,

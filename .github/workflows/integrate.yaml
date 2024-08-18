@@ -119,3 +119,19 @@ jobs:
             - name: Run TFLint
               working-directory: terraform
               run: tflint -f compact
+
+    terraform_format:
+        name: Terraform Format
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Terraform setup
+              uses: hashicorp/setup-terraform@v3
+              with:
+                  terraform_wrapper: false
+
+            - name: Terraform Format Check
+              working-directory: terraform
+              run: terraform fmt -recursive -check

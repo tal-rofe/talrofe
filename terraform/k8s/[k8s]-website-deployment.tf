@@ -4,7 +4,7 @@ resource "kubernetes_deployment_v1" "website" {
     namespace = "default"
 
     labels = {
-      app = "website"
+      app = "talrofe-website"
     }
   }
 
@@ -13,21 +13,21 @@ resource "kubernetes_deployment_v1" "website" {
 
     selector {
       match_labels = {
-        app = "website"
+        app = "talrofe-website"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "website"
+          app = "talrofe-website"
         }
       }
 
       spec {
         container {
           image             = "${data.aws_ecr_repository.website.repository_url}:${var.website_docker_image_tag}"
-          name              = "website"
+          name              = "talrofe-website"
           image_pull_policy = "Always"
 
           liveness_probe {
@@ -42,7 +42,7 @@ resource "kubernetes_deployment_v1" "website" {
 
           port {
             container_port = 80
-            name           = "website"
+            name           = "http-port"
           }
 
           resources {

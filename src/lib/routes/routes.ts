@@ -3,9 +3,9 @@ export const routes = {
 		path: '/',
 		title: 'Home',
 	},
-	myWork: {
-		path: '/my-work',
-		title: 'My Work',
+	projects: {
+		path: '/projects',
+		title: 'Projects',
 	},
 	about: {
 		path: '/about',

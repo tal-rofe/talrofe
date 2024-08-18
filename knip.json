@@ -9,7 +9,8 @@
 		"@commitlint/cli",
 		"prismjs",
 		"react-syntax-highlighter",
-		"@types/mdx"
+		"@types/mdx",
+		"sharp"
 	],
 	"project": ["./src/**/*"],
 	"ignore": ["./src/mdx-components.tsx"]

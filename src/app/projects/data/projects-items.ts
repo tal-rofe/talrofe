@@ -1,6 +1,6 @@
-import type { WorkItem } from '../types/work-item';
+import type { ProjectItem } from '../types/project-item';
 
-export const workItems: WorkItem[] = [
+export const projectsItems: ProjectItem[] = [
 	{
 		isHighlighted: true,
 		title: 'Kynesis Dashboard',

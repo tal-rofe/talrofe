@@ -5,10 +5,10 @@ on:
     push:
         branches: [main]
         paths:
-            - ./terraform/**
-            - ./.dockerignore
-            - ./docker/Dockerfile.website-prod
-            - ./src/**
+            - terraform/**
+            - .dockerignore
+            - docker/Dockerfile.website-prod
+            - src/**
 
 jobs:
     fulfill_terraform:
@@ -18,7 +18,7 @@ jobs:
             AWS_REGION: ${{ vars.AWS_REGION }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            TF_VAR_website_ecr_repository: website
+            TF_VAR_website_ecr_repository: talrofe-website
 
         steps:
             - uses: actions/checkout@v4
