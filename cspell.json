@@ -1,6 +1,6 @@
 {
 	"language": "en",
-	"ignoreWords": ["exlint", "kynesis", "animatedgradient", "rofe", "sourcerer", "inflint", "toploader", "xxxs"],
+	"ignoreWords": ["exlint", "kynesis", "animatedgradient", "rofe", "sourcerer", "inflint", "toploader", "xxxs", "drei"],
 	"ignorePaths": [
 		"renovate.json",
 		"pnpm-lock.yaml",
@@ -11,6 +11,7 @@
 		"next.config.js",
 		"cspell.json",
 		"terraform",
-		"docker"
+		"docker",
+		"./src/lib/data/globe.json"
 	]
 }
