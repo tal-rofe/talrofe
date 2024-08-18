@@ -23,7 +23,7 @@ type Position = {
 	color?: string;
 };
 
-export type GlobeConfig = {
+type GlobeConfig = {
 	pointSize?: number;
 	globeColor?: string;
 	showAtmosphere?: boolean;
@@ -56,7 +56,7 @@ type WorldProps = {
 
 let numbersOfRings = [0];
 
-export const Globe = ({ globeConfig, data }: WorldProps) => {
+const Globe = ({ globeConfig, data }: WorldProps) => {
 	const [globeData, setGlobeData] = useState<
 		| {
 				size: number;
@@ -235,7 +235,7 @@ export const Globe = ({ globeConfig, data }: WorldProps) => {
 	return <threeGlobe ref={globeRef} />;
 };
 
-export const WebGLRendererConfig = () => {
+const WebGLRendererConfig = () => {
 	const { gl, size } = useThree();
 
 	useEffect(() => {
@@ -275,7 +275,7 @@ export const World = (props: WorldProps) => {
 	);
 };
 
-export function hexToRgb(hex?: string) {
+function hexToRgb(hex?: string) {
 	if (!hex || typeof hex !== 'string') return null;
 
 	const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -295,7 +295,7 @@ export function hexToRgb(hex?: string) {
 		: null;
 }
 
-export function genRandomNumbers(min: number, max: number, count: number) {
+function genRandomNumbers(min: number, max: number, count: number) {
 	const arr = [];
 
 	while (arr.length < count) {
