@@ -56,7 +56,7 @@
 		"autoprefixer": "10.4.20",
 		"commitizen": "4.3.0",
 		"commitlint": "19.4.0",
-		"cspell": "8.13.2",
+		"cspell": "8.13.3",
 		"cz-vinyl": "2.5.1",
 		"dotenv-cli": "7.4.2",
 		"husky": "9.1.4",
