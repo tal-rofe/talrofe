@@ -1,6 +1,6 @@
 module "vpc_website" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "5.5.1"
+  version = "5.12.1"
 
   name = "main"
   cidr = var.vpc_cidr
