@@ -1,6 +1,6 @@
 {
 	"language": "en",
-	"ignoreWords": ["exlint", "kynesis", "animatedgradient", "rofe", "sourcerer", "inflint", "toploader", "xxxs", "drei"],
+	"ignoreWords": ["envinos", "exlint", "kynesis", "animatedgradient", "rofe", "sourcerer", "inflint", "toploader", "xxxs", "drei"],
 	"ignorePaths": [
 		"renovate.json",
 		"pnpm-lock.yaml",

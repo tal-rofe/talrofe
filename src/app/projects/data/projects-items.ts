@@ -2,6 +2,20 @@ import type { ProjectItem } from '../types/project-item';
 
 export const projectsItems: ProjectItem[] = [
 	{
+		isHighlighted: false,
+		title: 'Envinos',
+		description: 'Sync your local environment variables from AWS Secret Manager service',
+		link: 'https://github.com/tal-rofe/envinos',
+		imageFileName: 'envinos.png',
+		metadata: [
+			'https://img.shields.io/npm/dm/envinos?logo=NPM',
+			'https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white',
+			'https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white',
+			'https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white',
+			'https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white',
+		],
+	},
+	{
 		isHighlighted: true,
 		title: 'Kynesis Dashboard',
 		description: 'An open-source product following best practices',
@@ -10,6 +24,7 @@ export const projectsItems: ProjectItem[] = [
 		metadata: [
 			'https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white',
 			'https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white',
+			'https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white',
 			'https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white',
 			'https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white',
 			'https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB',
