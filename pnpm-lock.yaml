@@ -68,7 +68,7 @@ importers:
     devDependencies:
       '@commitlint/cli':
         specifier: 19.4.1
-        version: 19.4.1(@types/node@20.16.2)(typescript@5.5.4)
+        version: 19.4.1(@types/node@20.16.3)(typescript@5.5.4)
       '@mdx-js/loader':
         specifier: 3.0.1
         version: 3.0.1(webpack@5.93.0)
@@ -82,8 +82,8 @@ importers:
         specifier: 2.0.13
         version: 2.0.13
       '@types/node':
-        specifier: 20.16.2
-        version: 20.16.2
+        specifier: 20.16.3
+        version: 20.16.3
       '@types/react':
         specifier: 18.3.5
         version: 18.3.5
@@ -101,16 +101,16 @@ importers:
         version: 10.4.20(postcss@8.4.41)
       commitizen:
         specifier: 4.3.0
-        version: 4.3.0(@types/node@20.16.2)(typescript@5.5.4)
+        version: 4.3.0(@types/node@20.16.3)(typescript@5.5.4)
       commitlint:
         specifier: 19.4.1
-        version: 19.4.1(@types/node@20.16.2)(typescript@5.5.4)
+        version: 19.4.1(@types/node@20.16.3)(typescript@5.5.4)
       cspell:
         specifier: 8.14.2
         version: 8.14.2
       cz-vinyl:
         specifier: 2.5.1
-        version: 2.5.1(@types/node@20.16.2)(inquirer@8.2.5)(typescript@5.5.4)
+        version: 2.5.1(@types/node@20.16.3)(inquirer@8.2.5)(typescript@5.5.4)
       dotenv-cli:
         specifier: 7.4.2
         version: 7.4.2
@@ -125,7 +125,7 @@ importers:
         version: 3.0.0
       knip:
         specifier: 5.29.1
-        version: 5.29.1(@types/node@20.16.2)(typescript@5.5.4)
+        version: 5.29.1(@types/node@20.16.3)(typescript@5.5.4)
       lint-staged:
         specifier: 15.2.9
         version: 15.2.9
@@ -844,8 +844,8 @@ packages:
   '@types/node@18.19.39':
     resolution: {integrity: sha512-nPwTRDKUctxw3di5b4TfT3I0sWDiWoPQCZjXhvdkINntwr8lcoVCKsTgnXeRubKIlfnV+eN/HYk6Jb40tbcEAQ==}
 
-  '@types/node@20.16.2':
-    resolution: {integrity: sha512-91s/n4qUPV/wg8eE9KHYW1kouTfDk2FPGjXbBMfRWP/2vg1rCXNQL1OCabwGs0XSdukuK+MwCDXE30QpSeMUhQ==}
+  '@types/node@20.16.3':
+    resolution: {integrity: sha512-/wdGiWRkMOm53gAsSyFMXFZHbVg7C6CbkrzHNpaHoYfsUWPg7m6ZRKtvQjgvQ9i8WT540a3ydRlRQbxjY30XxQ==}
 
   '@types/offscreencanvas@2019.7.3':
     resolution: {integrity: sha512-ieXiYmgSRXUDeOntE1InxjWyvEelZGP63M+cGuquuRLuIKKT1osnkXjxev9B7d1nXSug5vpunx+gNlbVxMlC9A==}
@@ -3661,11 +3661,11 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
-  '@commitlint/cli@19.4.1(@types/node@20.16.2)(typescript@5.5.4)':
+  '@commitlint/cli@19.4.1(@types/node@20.16.3)(typescript@5.5.4)':
     dependencies:
       '@commitlint/format': 19.3.0
       '@commitlint/lint': 19.4.1
-      '@commitlint/load': 19.4.0(@types/node@20.16.2)(typescript@5.5.4)
+      '@commitlint/load': 19.4.0(@types/node@20.16.3)(typescript@5.5.4)
       '@commitlint/read': 19.4.0
       '@commitlint/types': 19.0.3
       execa: 8.0.1
@@ -3707,7 +3707,7 @@ snapshots:
       '@commitlint/rules': 19.4.1
       '@commitlint/types': 19.0.3
 
-  '@commitlint/load@19.2.0(@types/node@20.16.2)(typescript@5.5.4)':
+  '@commitlint/load@19.2.0(@types/node@20.16.3)(typescript@5.5.4)':
     dependencies:
       '@commitlint/config-validator': 19.0.3
       '@commitlint/execute-rule': 19.0.0
@@ -3715,7 +3715,7 @@ snapshots:
       '@commitlint/types': 19.0.3
       chalk: 5.3.0
       cosmiconfig: 9.0.0(typescript@5.5.4)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.16.2)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.16.3)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -3724,7 +3724,7 @@ snapshots:
       - typescript
     optional: true
 
-  '@commitlint/load@19.4.0(@types/node@20.16.2)(typescript@5.5.4)':
+  '@commitlint/load@19.4.0(@types/node@20.16.3)(typescript@5.5.4)':
     dependencies:
       '@commitlint/config-validator': 19.0.3
       '@commitlint/execute-rule': 19.0.0
@@ -3732,7 +3732,7 @@ snapshots:
       '@commitlint/types': 19.0.3
       chalk: 5.3.0
       cosmiconfig: 9.0.0(typescript@5.5.4)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.16.2)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.16.3)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -4318,7 +4318,7 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.0':
     dependencies:
-      '@types/node': 20.16.2
+      '@types/node': 20.16.3
 
   '@types/debounce@1.2.4': {}
 
@@ -4364,14 +4364,14 @@ snapshots:
 
   '@types/node-fetch@2.6.11':
     dependencies:
-      '@types/node': 20.16.2
+      '@types/node': 20.16.3
       form-data: 4.0.0
 
   '@types/node@18.19.39':
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@20.16.2':
+  '@types/node@20.16.3':
     dependencies:
       undici-types: 6.19.8
 
@@ -4836,10 +4836,10 @@ snapshots:
       has-own-prop: 2.0.0
       repeat-string: 1.6.1
 
-  commitizen@4.3.0(@types/node@20.16.2)(typescript@5.5.4):
+  commitizen@4.3.0(@types/node@20.16.3)(typescript@5.5.4):
     dependencies:
       cachedir: 2.3.0
-      cz-conventional-changelog: 3.3.0(@types/node@20.16.2)(typescript@5.5.4)
+      cz-conventional-changelog: 3.3.0(@types/node@20.16.3)(typescript@5.5.4)
       dedent: 0.7.0
       detect-indent: 6.1.0
       find-node-modules: 2.1.3
@@ -4856,9 +4856,9 @@ snapshots:
       - '@types/node'
       - typescript
 
-  commitlint@19.4.1(@types/node@20.16.2)(typescript@5.5.4):
+  commitlint@19.4.1(@types/node@20.16.3)(typescript@5.5.4):
     dependencies:
-      '@commitlint/cli': 19.4.1(@types/node@20.16.2)(typescript@5.5.4)
+      '@commitlint/cli': 19.4.1(@types/node@20.16.3)(typescript@5.5.4)
       '@commitlint/types': 19.0.3
     transitivePeerDependencies:
       - '@types/node'
@@ -4886,9 +4886,9 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
-  cosmiconfig-typescript-loader@5.0.0(@types/node@20.16.2)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4):
+  cosmiconfig-typescript-loader@5.0.0(@types/node@20.16.3)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4):
     dependencies:
-      '@types/node': 20.16.2
+      '@types/node': 20.16.3
       cosmiconfig: 9.0.0(typescript@5.5.4)
       jiti: 1.21.6
       typescript: 5.5.4
@@ -5008,24 +5008,24 @@ snapshots:
 
   csstype@3.1.3: {}
 
-  cz-conventional-changelog@3.3.0(@types/node@20.16.2)(typescript@5.5.4):
+  cz-conventional-changelog@3.3.0(@types/node@20.16.3)(typescript@5.5.4):
     dependencies:
       chalk: 2.4.2
-      commitizen: 4.3.0(@types/node@20.16.2)(typescript@5.5.4)
+      commitizen: 4.3.0(@types/node@20.16.3)(typescript@5.5.4)
       conventional-commit-types: 3.0.0
       lodash.map: 4.6.0
       longest: 2.0.1
       word-wrap: 1.2.5
     optionalDependencies:
-      '@commitlint/load': 19.2.0(@types/node@20.16.2)(typescript@5.5.4)
+      '@commitlint/load': 19.2.0(@types/node@20.16.3)(typescript@5.5.4)
     transitivePeerDependencies:
       - '@types/node'
       - typescript
 
-  cz-vinyl@2.5.1(@types/node@20.16.2)(inquirer@8.2.5)(typescript@5.5.4):
+  cz-vinyl@2.5.1(@types/node@20.16.3)(inquirer@8.2.5)(typescript@5.5.4):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.5.4)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.16.2)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.16.3)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4)
       fuse.js: 7.0.0
       inquirer-autocomplete-prompt: 2.0.1(inquirer@8.2.5)
       inquirer-maxlength-input-prompt: 1.0.2
@@ -5794,7 +5794,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.16.2
+      '@types/node': 20.16.3
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -5832,11 +5832,11 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  knip@5.29.1(@types/node@20.16.2)(typescript@5.5.4):
+  knip@5.29.1(@types/node@20.16.3)(typescript@5.5.4):
     dependencies:
       '@nodelib/fs.walk': 1.2.8
       '@snyk/github-codeowners': 1.1.0
-      '@types/node': 20.16.2
+      '@types/node': 20.16.3
       easy-table: 1.2.0
       enhanced-resolve: 5.17.1
       fast-glob: 3.3.2
