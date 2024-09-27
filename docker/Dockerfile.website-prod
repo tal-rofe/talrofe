@@ -1,7 +1,7 @@
 
 FROM node:20.17.0
 
-RUN npm i -g pnpm@9.10.0
+RUN npm i -g pnpm@9.11.0
 
 WORKDIR /app
 
