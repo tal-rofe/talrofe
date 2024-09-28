@@ -2,6 +2,7 @@ import type { MDXComponents } from 'mdx/types';
 import { oneLight, oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { useTheme } from 'next-themes';
+import { FaQuoteLeft } from 'react-icons/fa6';
 
 export const useMDXComponents = (components: MDXComponents): MDXComponents => {
 	const { theme } = useTheme();
@@ -36,6 +37,13 @@ export const useMDXComponents = (components: MDXComponents): MDXComponents => {
 		),
 
 		ul: ({ children }) => <ul className="my-3 ms-5 list-disc">{children}</ul>,
+
+		blockquote: ({ children }) => (
+			<blockquote className="mb-1 flex flex-col border-l-4 border-l-sky-700 pl-4 italic">
+				<FaQuoteLeft className="mb-1" />
+				<div className="ms-2">{children}</div>
+			</blockquote>
+		),
 
 		...components,
 	};
