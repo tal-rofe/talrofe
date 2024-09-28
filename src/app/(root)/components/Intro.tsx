@@ -37,6 +37,10 @@ const Intro = () => {
 					<span className="ms-2">LinkedIn</span>
 				</Link>
 			</div>
+
+			<a className="my-5" href="https://app.daily.dev/talr98">
+				<img src="https://api.daily.dev/devcards/v2/1ly2oYyRY0SZ2r7lGr5dI.png?r=qkb&type=wide" width="400" alt="Tal Rofe's Dev Card" />
+			</a>
 		</div>
 	);
 };
