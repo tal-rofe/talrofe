@@ -1,0 +1,386 @@
+## What is TOR?
+
+> Tor Browser uses the Tor network to protect your privacy and anonymity. Using the Tor network has two main properties:
+>
+> -   Your internet service provider, and anyone watching your connection locally, will not be able to track your internet activity, including the names and addresses of the websites you visit.
+> -   The operators of the websites and services that you use, and anyone watching them, will see a connection coming from the Tor network instead of your real Internet (IP) address, and will not know who you are unless you explicitly identify yourself.
+
+(Source: https://tb-manual.torproject.org/about/)
+
+One purpose for using proxy(ies) would be scraping websites & APIs without being rate limited or blocked. If you keep scraping using your own router IP facing the internet, you might be blocked very soon.
+
+To skip it, you can utilize TOR network, without paying nothing - completely free.
+
+### Prerequisites
+
+-   Docker
+-   NodeJS (or any other programming language...)
+
+### Setup
+
+To start using TOR network, you need to use this Docker image: https://hub.docker.com/r/dperson/torproxy, which allows you use TOR network in a Docker container. To simply use it, you can use this `docker-compose.yaml` file to start one TOR container:
+
+```yaml
+services:
+    tor_proxy:
+        container_name: tor_proxy
+        image: dperson/torproxy
+        ports:
+            - 8118:8118
+            - 9051:9051
+        environment:
+            - PASSWORD=password
+```
+
+Port `8118` is required for network and port `9051` is required for renew the proxy IP (if blocked for example - you can change its IP).
+
+Then, you can run `docker compose up -d` to have 1 proxy.
+
+### Use TOR network for proxies use case
+
+You can scale up your TOR network easily with the Docker Compose file. You can actually create as many as you want (well, bounded to this list: https://www.dan.me.uk/torlist/?exit), using this Docker Compose file (example for managing 5 proxies):
+
+```yaml
+services:
+    proxy1:
+        container_name: proxy1
+        image: dperson/torproxy
+        ports:
+            - 8118:8118
+            - 9051:9051
+        environment:
+            - PASSWORD=password
+    proxy2:
+        container_name: proxy2
+        image: dperson/torproxy
+        ports:
+            - 8119:8118
+            - 9052:9051
+        environment:
+            - PASSWORD=password
+    proxy3:
+        container_name: proxy3
+        image: dperson/torproxy
+        ports:
+            - 8120:8118
+            - 9053:9051
+        environment:
+            - PASSWORD=password
+    proxy4:
+        container_name: proxy4
+        image: dperson/torproxy
+        ports:
+            - 8121:8118
+            - 9054:9051
+        environment:
+            - PASSWORD=password
+    proxy5:
+        container_name: proxy5
+        image: dperson/torproxy
+        ports:
+            - 8122:8118
+            - 9055:9051
+        environment:
+            - PASSWORD=password
+```
+
+It allows you to load balance your egress network across multiple proxies.
+
+### Use case - GitHub scraping
+
+GitHub API and GitHub UI is highly rate limited, even for offline requests. However, if you use 5 proxies concurrently, you multiply the rate limit threshold by 5.
+
+For example, if one would like to scrape a GitHub repository's stargazers, he would need to scrape 40K stargazers (GitHub limits 40K results - even if the repository has 50K stargazers). This might limit your code without proxies because you will be blocked very quick using only your router IP. What with usage of TOR network for proxies, you can achieve this data very quick and easily:
+
+#### Configure constants for configuration
+
+Configure yourself your script configuration for proxies number and more:
+
+```ts
+export const PROXIES_COUNT = 16;
+
+export const PROXY_INITIAL_PORT = 8118;
+
+export const PROXY_RENEW_CIRCUIT_CONNECTION_PORT = 9051;
+```
+
+Use `PROXIES_COUNT` to declare how much proxies you want to use. Other constants should be kept as is (unless you change ports - why?..)
+
+#### Create your proxies HTTP agents:
+
+First install package `https-proxy-agent` to create a proxy agent:
+`pnpm add https-proxy-agent`
+
+Then create the proxies:
+
+```ts
+import { HttpsProxyAgent } from 'https-proxy-agent';
+
+import { PROXY_INITIAL_PORT, PROXIES_COUNT } from '../constants/proxy';
+
+export const proxyAgents = new Array(PROXIES_COUNT)
+	.fill(null)
+	.map((_, index) => new HttpsProxyAgent(`http://127.0.0.1:${PROXY_INITIAL_PORT + index}`));
+```
+
+#### Create HTTP client to send requests:
+
+First install package `got` to create HTTP client:
+`pnpm add got`
+
+Then create the client:
+
+```ts
+import got, { type Headers } from 'got';
+
+import { proxyAgents } from './proxy-agents';
+
+const SECOND = 1000;
+
+const TIMEOUT = 10 * SECOND;
+
+const RETRIES = 3;
+
+export const getBaseHttp = (proxyIndex: number, headers?: Headers) => {
+	const newHeaders = { ...headers };
+
+	return got.extend({
+		timeout: { request: TIMEOUT },
+		retry: {
+			limit: RETRIES,
+			methods: ['HEAD', 'OPTIONS', 'TRACE', 'GET'],
+			statusCodes: [408, 413, 500, 502, 503, 504, 521, 522, 524],
+			// * Keep others (backoff limit, ...) as default
+		},
+		throwHttpErrors: false,
+		agent: { https: proxyAgents[proxyIndex]! },
+		headers: newHeaders,
+	});
+};
+```
+
+#### Check all the proxies are ready to use
+
+First you run `docker compose up -d` with your Docker Compose file, but it might take a minute or more until all the proxies are ready to use. Thus, we need to health check all the containers, until they are ready.
+
+First, install package `docker-compose`:
+`pnpm add docker-compose` and then declare this function to await the containers to be healthy:
+
+```ts
+import { v2 as dockerCompose } from 'docker-compose';
+
+export const awaitProxiesContainerHealth = async () => {
+	console.log('Awaiting docker proxies container to be healthy');
+
+	try {
+		const psResult = await dockerCompose.ps({ cwd: process.cwd() });
+		const areAllReady = psResult.exitCode === 0 && psResult.data.services.every((service) => service.state.includes('healthy'));
+
+		if (areAllReady) {
+			return;
+		}
+	} catch (error) {
+		console.warn('Failed to check health of containers', { errorCode: 'AWAIT_DOCKER_PROXIES_CONTAINER_HEALTH', error });
+	}
+
+	await new Promise((resolve) => setTimeout(resolve, 5000));
+
+	await awaitProxiesContainerHealth();
+
+	return;
+};
+```
+
+Then, you can await, in your main script, for healthness:
+
+```ts
+const proxiesContainerHealthTimeout = setTimeout(() => {
+	LoggerService.error('Failed to check health of proxies containers', { errorCode: ErrorCode.AWAIT_DOCKER_PROXIES_CONTAINER_HEALTH });
+
+	process.exit(1);
+}, PROXIES_HEALTH_TIMEOUT);
+
+await awaitProxiesContainerHealth();
+
+clearTimeout(proxiesContainerHealthTimeout);
+```
+
+You should configure yourself `PROXIES_HEALTH_TIMEOUT` constant, possible 5 minutes (1000 _ 60 _ 5 milliseconds).
+
+#### Counting repository total stargazers count:
+
+You can use this code to get the count:
+
+```ts
+import { TorControl } from 'tor-ctrl';
+
+import { getBaseHttp } from '../utils/http';
+
+export const getRepositoryStargazersCount = async () => {
+	console.log(
+		'Querying stargazers count of repository',
+		{ githubOwner: process.env.GITHUB_OWNER, githubRepository: process.env.GITHUB_REPOSITORY },
+		true,
+	);
+
+	const baseHttp = getBaseHttp(0);
+
+	let response = await baseHttp.get(`https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPOSITORY}`);
+
+	while (response.statusCode === 403) {
+		console.warn('Failed to get stargazers count because of rate limit', {
+			errorCode: 'GITHUB_API_RATE_LIMIT',
+		});
+
+		const torControl = new TorControl({
+			host: 'localhost',
+			port: 9051,
+			password: 'password',
+		});
+
+		await torControl.connect();
+		await torControl.signalNewNym();
+		await torControl.disconnect();
+
+		response = await baseHttp.get(`https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPOSITORY}`);
+	}
+
+	if (!response.ok) {
+		console.warn('Failed to get stargazers count because of an error', {
+			errorCode: 'GITHUB_API_STARGAZERS_COUNT',
+			error: response.body,
+		});
+
+		throw response.errored;
+	}
+
+	console.info('Successfully fetched stargazers count', { stargazersCount: response.body.stargazers_count });
+
+	return response.body.stargazers_count;
+};
+```
+
+Note that `while` statement. We run the block code as long as we are rate limited, and if we are - we signal the TOR container with the `NewNym` signal to replace the IP for other one (so bypass the IP blocking).
+
+Then, in your main script use this function to get the count:
+
+```ts
+let repositoryStargazersCount: number;
+
+try {
+	repositoryStargazersCount = await getRepositoryStargazersCount();
+} catch (error) {
+	LoggerService.error('Failed to fetch stargazers count', { errorCode: ErrorCode.REPOSITORY_STARGAZERS_COUNT, error });
+
+	return;
+}
+
+if (repositoryStargazersCount === 0) {
+	return;
+}
+```
+
+#### Get all stargazers details:
+
+Create these 2 functions to scrape the stargazers details:
+
+```ts
+import { TorControl } from 'tor-ctrl';
+
+import { MAX_STARGAZERS_PAGES, STARGAZERS_IN_PAGE } from '../constants/stargazers-page';
+import { proxyAgents } from '../data/proxy-agents';
+import { RepositoryStargazersResponseSchema } from '../schemas/repository-stargazers';
+import { getBaseHttp } from '../utils/http';
+import { PROXY_RENEW_CIRCUIT_CONNECTION_PORT } from '../constants/proxy';
+
+const getPageStargazers = async (proxyIndex: number, page: number) => {
+	const searchParams = new URLSearchParams({ per_page: STARGAZERS_IN_PAGE.toString(), page: page.toString() });
+
+	const baseHttp = getBaseHttp(proxyIndex, {
+		Accept: 'application/vnd.github.star+json',
+	}).extend({ searchParams });
+
+	let pageResponse = await baseHttp.get(`https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPOSITORY}/stargazers`);
+
+	while (pageResponse.statusCode === 403) {
+		console.warn('Failed to get stargazers for page because of rate limit', {
+			errorCode: 'GITHUB_API_RATE_LIMIT',
+			page,
+			proxyIndex,
+		});
+
+		const torControl = new TorControl({
+			host: 'localhost',
+			port: PROXY_RENEW_CIRCUIT_CONNECTION_PORT + proxyIndex,
+			password: 'password',
+		});
+
+		await torControl.connect();
+		await torControl.signalNewNym();
+		await torControl.disconnect();
+
+		pageResponse = await baseHttp.get(`https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPOSITORY}/stargazers`);
+	}
+
+	if (!pageResponse.ok) {
+		console.warn('Failed to get stargazers for page because of an error', {
+			error: pageResponse.body,
+			errorCode: 'GITHUB_API_STARGAZERS',
+			page,
+			proxyIndex,
+		});
+
+		throw pageResponse.errored;
+	}
+
+	const validatedPageResponse = await RepositoryStargazersResponseSchema.safeParseAsync(JSON.parse(pageResponse.body));
+
+	if (!validatedPageResponse.success) {
+		console.warn('Invalid page response', {
+			errorCode: 'GITHUB_API_STARGAZERS_INVALID',
+			invalidError: validatedPageResponse.error.message,
+			proxyIndex,
+			page,
+		});
+
+		throw validatedPageResponse.error;
+	}
+
+	return validatedPageResponse.data;
+};
+
+export const getRepositoryStargazers = async (count: number) => {
+	// * GitHub restrict 400 pages
+	const numberOfPagesToScrape = Math.min(Math.ceil(count / STARGAZERS_IN_PAGE), MAX_STARGAZERS_PAGES);
+
+	const repositoryStargazers: z.infer<typeof RepositoryStargazersResponseSchema>[] = [];
+
+	for (let i = 1; i <= numberOfPagesToScrape; i++) {
+		const promises: ReturnType<typeof getPageStargazers>[] = [];
+
+		for (let j = 0; j < 10 * proxyAgents.length && i <= numberOfPagesToScrape; i++, j++) {
+			promises.push(getPageStargazers(j % proxyAgents.length, i));
+		}
+
+		const results = await Promise.allSettled(promises);
+
+		const validStargazers = results
+			.filter((result): result is PromiseFulfilledResult<z.infer<typeof RepositoryStargazersResponseSchema>> => result.status === 'fulfilled')
+			.map((result) => result.value);
+
+		repositoryStargazers.push(...validStargazers);
+	}
+
+	return repositoryStargazers.flat();
+};
+```
+
+(Not all imports are explicitly given, it's up to you...)
+
+Then use it in your main script:
+
+```ts
+const repositoryStargazers = await getRepositoryStargazers(repositoryStargazersCount);
+```
+
+And now you successfully scrape all (up to 40K..) stargazers of a given repository. Have fun.
