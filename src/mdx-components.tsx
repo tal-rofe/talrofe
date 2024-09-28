@@ -35,6 +35,8 @@ export const useMDXComponents = (components: MDXComponents): MDXComponents => {
 			</a>
 		),
 
+		ul: ({ children }) => <ul className="my-3 ms-5 list-disc">{children}</ul>,
+
 		...components,
 	};
 };
