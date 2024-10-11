@@ -7,9 +7,11 @@ resource "helm_release" "ingress" {
   timeout    = 200
   atomic     = true
 
-  values = [
-    file("./resources/aws-load-balancer-controller-values.yaml")
-  ]
+  # * https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/deploy/installation/#summary
+  set {
+    name  = "serviceAccount.create"
+    value = false
+  }
 
   set {
     name  = "region"

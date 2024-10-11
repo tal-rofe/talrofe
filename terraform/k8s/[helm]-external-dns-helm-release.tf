@@ -6,9 +6,20 @@ resource "helm_release" "external_dns" {
   timeout    = 200
   atomic     = false
 
-  values = [
-    file("./resources/external-dns-values.yaml")
-  ]
+  set {
+    name  = "serviceAccount.create"
+    value = false
+  }
+
+  set {
+    name  = "policy"
+    value = "sync"
+  }
+
+  set {
+    name  = "domainFilters"
+    value = [var.website_host]
+  }
 
   set {
     name  = "region"
