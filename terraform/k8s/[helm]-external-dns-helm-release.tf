@@ -16,9 +16,9 @@ resource "helm_release" "external_dns" {
     value = "sync"
   }
 
-  set {
+  set_list {
     name  = "domainFilters"
-    value = "[${var.website_host}]"
+    value = [var.website_host]
   }
 
   set {
@@ -33,6 +33,6 @@ resource "helm_release" "external_dns" {
 
   depends_on = [
     aws_iam_role_policy_attachment.external_dns,
-    aws_iam_policy.external_dns
+    aws_iam_policy.external_dns,
   ]
 }
