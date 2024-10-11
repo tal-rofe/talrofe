@@ -18,7 +18,7 @@ resource "helm_release" "external_dns" {
 
   set {
     name  = "domainFilters"
-    value = [var.website_host]
+    value = "[${var.website_host}]"
   }
 
   set {
