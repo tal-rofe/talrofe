@@ -22,7 +22,7 @@
 		"cspell": "cspell lint -c ./cspell.json --gitignore --no-progress --no-summary **"
 	},
 	"dependencies": {
-		"@react-three/drei": "9.114.2",
+		"@react-three/drei": "9.114.3",
 		"@react-three/fiber": "8.17.9",
 		"@tailwindcss/typography": "0.5.15",
 		"ag-grid-community": "31.3.4",
