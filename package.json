@@ -39,7 +39,7 @@
 		"sharp": "0.33.5",
 		"tailwind-merge": "2.5.3",
 		"tailwindcss-animate": "1.0.7",
-		"three": "0.168.0",
+		"three": "0.169.0",
 		"three-globe": "2.31.1"
 	},
 	"devDependencies": {
@@ -52,7 +52,7 @@
 		"@types/react": "18.3.11",
 		"@types/react-dom": "18.3.0",
 		"@types/react-syntax-highlighter": "15.5.13",
-		"@types/three": "0.168.0",
+		"@types/three": "0.169.0",
 		"autoprefixer": "10.4.20",
 		"commitizen": "4.3.1",
 		"commitlint": "19.5.0",
