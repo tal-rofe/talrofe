@@ -1,6 +1,6 @@
 module "acm_for_website_alb" {
   source  = "terraform-aws-modules/acm/aws"
-  version = "5.1.0"
+  version = "5.1.1"
 
   domain_name         = var.website_domain_name
   zone_id             = data.aws_route53_zone.website.zone_id
