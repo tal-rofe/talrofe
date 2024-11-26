@@ -43,7 +43,7 @@
 		"three-globe": "2.35.2"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "19.5.0",
+		"@commitlint/cli": "19.6.0",
 		"@mdx-js/loader": "3.1.0",
 		"@mdx-js/react": "3.1.0",
 		"@next/mdx": "14.2.18",
@@ -55,7 +55,7 @@
 		"@types/three": "0.170.0",
 		"autoprefixer": "10.4.20",
 		"commitizen": "4.3.1",
-		"commitlint": "19.5.0",
+		"commitlint": "19.6.0",
 		"cspell": "8.16.0",
 		"cz-vinyl": "2.5.4",
 		"dotenv-cli": "7.4.3",
