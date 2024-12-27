@@ -133,8 +133,8 @@ importers:
         specifier: 6.2.6
         version: 6.2.6
       pnpm:
-        specifier: 9.15.0
-        version: 9.15.0
+        specifier: 9.15.1
+        version: 9.15.1
       postcss:
         specifier: 8.4.49
         version: 8.4.49
@@ -2822,8 +2822,8 @@ packages:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
 
-  pnpm@9.15.0:
-    resolution: {integrity: sha512-duI3l2CkMo7EQVgVvNZije5yevN3mqpMkU45RBVsQpmSGon5djge4QfUHxLPpLZmgcqccY8GaPoIMe1MbYulbA==}
+  pnpm@9.15.1:
+    resolution: {integrity: sha512-GstWXmGT7769p3JwKVBGkVDPErzHZCYudYfnHRncmKQj3/lTblfqRMSb33kP9pToPCe+X6oj1n4MAztYO+S/zw==}
     engines: {node: '>=18.12'}
     hasBin: true
 
@@ -6828,7 +6828,7 @@ snapshots:
 
   pirates@4.0.6: {}
 
-  pnpm@9.15.0: {}
+  pnpm@9.15.1: {}
 
   point-in-polygon-hao@1.2.3:
     dependencies:
