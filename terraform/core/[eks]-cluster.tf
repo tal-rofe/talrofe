@@ -1,6 +1,6 @@
 module "eks_cluster_website" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "19.21.0"
+  version = "20.33.1"
 
   cluster_name                   = "talrofe-website"
   cluster_version                = "1.30"
