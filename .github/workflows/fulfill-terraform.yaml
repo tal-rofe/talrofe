@@ -44,6 +44,86 @@ jobs:
               with:
                   terraform_wrapper: false
 
+          # *****
+
+
+            - name: Terraform core init
+              working-directory: terraform/core
+              env:
+                  TERRAFORM_BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
+                  TERRAFORM_BACKEND_DYNAMODB_TABLE: ${{ secrets.TERRAFORM_BACKEND_DYNAMODB_TABLE }}
+              run: |
+                  terraform init \
+                  -backend-config="bucket=$TERRAFORM_BACKEND_S3_BUCKET" \
+                  -backend-config="dynamodb_table=$TERRAFORM_BACKEND_DYNAMODB_TABLE" \
+                  -backend-config="region=$AWS_REGION"
+
+            - name: Terraform core plan
+              working-directory: terraform/core
+              run: terraform plan -no-color -out state.tfplan
+
+            - name: Terraform core apply
+              working-directory: terraform/core
+              run: terraform apply state.tfplan
+
+            - name: Get Terraform core outputs
+              id: terraform-outputs
+              working-directory: terraform/core
+              run: |
+                  eks_cluster_kubeconfig=$(terraform output -raw eks_cluster_kubeconfig | base64)
+                  echo "EKS_CLUSTER_KUBECONFIG<<EOF" >> $GITHUB_OUTPUT
+                  echo "$eks_cluster_kubeconfig" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+
+            - name: Set K8s Kubeconfig secret
+              uses: hmanzur/actions-set-secret@v2.0.0
+              with:
+                  name: EKS_CLUSTER_KUBECONFIG
+                  value: ${{ steps.terraform-outputs.outputs.EKS_CLUSTER_KUBECONFIG }}
+                  repository: tal-rofe/talrofe
+                  token: ${{ secrets.SET_SECRETS_GH_TOKEN }}
+
+            - name: Login to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v2
+
+            - name: Get package.json version
+              id: package-version
+              uses: martinbeentjes/npm-get-version-action@main
+
+            - name: Build, tag, and push image of website to Amazon ECR
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  IMAGE_TAG: ${{ steps.package-version.outputs.current-version }}-${{ github.sha }}
+              run: |
+                  docker build -t $ECR_REGISTRY/$TF_VAR_website_ecr_repository:$IMAGE_TAG -f ./docker/Dockerfile.website-prod .
+                  docker push $ECR_REGISTRY/$TF_VAR_website_ecr_repository:$IMAGE_TAG
+
+            - name: Terraform K8s init
+              working-directory: terraform/k8s
+              env:
+                  TERRAFORM_BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
+                  TERRAFORM_BACKEND_DYNAMODB_TABLE: ${{ secrets.TERRAFORM_BACKEND_DYNAMODB_TABLE }}
+              run: |
+                  terraform init \
+                  -backend-config="bucket=$TERRAFORM_BACKEND_S3_BUCKET" \
+                  -backend-config="dynamodb_table=$TERRAFORM_BACKEND_DYNAMODB_TABLE" \
+                  -backend-config="region=$AWS_REGION"
+
+            - name: Terraform K8s plan
+              working-directory: terraform/k8s
+              env:
+                  TF_VAR_website_docker_image_tag: ${{ steps.package-version.outputs.current-version }}-${{ github.sha }}
+              run: terraform plan -no-color -out state.tfplan
+
+            - name: Terraform K8s apply
+              working-directory: terraform/k8s
+              run: terraform apply state.tfplan
+
+
+
+          #**
+
             - name: Terraform init
               working-directory: terraform
               env:
@@ -64,7 +144,7 @@ jobs:
               run: terraform apply state.tfplan
 
             - name: Get Terraform core outputs
-              id: terraform-outputs
+              id: terraform-outputs1
               working-directory: terraform
               run: |
                   app_cloudfront_distribution_id=$(terraform output -raw app_cloudfront_distribution_id)
@@ -74,6 +154,6 @@ jobs:
               uses: hmanzur/actions-set-secret@v2.0.0
               with:
                   name: APP_CLOUDFRONT_DISTRIBUTION_ID
-                  value: ${{ steps.terraform-outputs.outputs.APP_CLOUDFRONT_DISTRIBUTION_ID }}
+                  value: ${{ steps.terraform-outputs1.outputs.APP_CLOUDFRONT_DISTRIBUTION_ID }}
                   repository: tal-rofe/talrofe
                   token: ${{ secrets.SET_SECRETS_GH_TOKEN }}
