@@ -44,8 +44,8 @@ jobs:
               with:
                   terraform_wrapper: false
 
-            - name: Terraform core init
-              working-directory: terraform/core
+            - name: Terraform init
+              working-directory: terraform
               env:
                   TERRAFORM_BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
                   TERRAFORM_BACKEND_DYNAMODB_TABLE: ${{ secrets.TERRAFORM_BACKEND_DYNAMODB_TABLE }}
