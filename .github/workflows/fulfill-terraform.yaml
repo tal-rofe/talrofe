@@ -45,44 +45,7 @@ jobs:
                   terraform_wrapper: false
 
           # *****
-
-
-            - name: Terraform core init
-              working-directory: terraform/core
-              env:
-                  TERRAFORM_BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
-                  TERRAFORM_BACKEND_DYNAMODB_TABLE: ${{ secrets.TERRAFORM_BACKEND_DYNAMODB_TABLE }}
-              run: |
-                  terraform init \
-                  -backend-config="bucket=$TERRAFORM_BACKEND_S3_BUCKET" \
-                  -backend-config="dynamodb_table=$TERRAFORM_BACKEND_DYNAMODB_TABLE" \
-                  -backend-config="region=$AWS_REGION"
-
-            - name: Terraform core plan
-              working-directory: terraform/core
-              run: terraform plan -no-color -out state.tfplan
-
-            - name: Terraform core apply
-              working-directory: terraform/core
-              run: terraform apply state.tfplan
-
-            - name: Get Terraform core outputs
-              id: terraform-outputs
-              working-directory: terraform/core
-              run: |
-                  eks_cluster_kubeconfig=$(terraform output -raw eks_cluster_kubeconfig | base64)
-                  echo "EKS_CLUSTER_KUBECONFIG<<EOF" >> $GITHUB_OUTPUT
-                  echo "$eks_cluster_kubeconfig" >> $GITHUB_OUTPUT
-                  echo "EOF" >> $GITHUB_OUTPUT
-
-            - name: Set K8s Kubeconfig secret
-              uses: hmanzur/actions-set-secret@v2.0.0
-              with:
-                  name: EKS_CLUSTER_KUBECONFIG
-                  value: ${{ steps.terraform-outputs.outputs.EKS_CLUSTER_KUBECONFIG }}
-                  repository: tal-rofe/talrofe
-                  token: ${{ secrets.SET_SECRETS_GH_TOKEN }}
-
+            
             - name: Login to Amazon ECR
               id: login-ecr
               uses: aws-actions/amazon-ecr-login@v2
@@ -120,6 +83,43 @@ jobs:
               working-directory: terraform/k8s
               run: terraform apply state.tfplan
 
+
+
+            - name: Terraform core init
+              working-directory: terraform/core
+              env:
+                  TERRAFORM_BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
+                  TERRAFORM_BACKEND_DYNAMODB_TABLE: ${{ secrets.TERRAFORM_BACKEND_DYNAMODB_TABLE }}
+              run: |
+                  terraform init \
+                  -backend-config="bucket=$TERRAFORM_BACKEND_S3_BUCKET" \
+                  -backend-config="dynamodb_table=$TERRAFORM_BACKEND_DYNAMODB_TABLE" \
+                  -backend-config="region=$AWS_REGION"
+
+            - name: Terraform core plan
+              working-directory: terraform/core
+              run: terraform plan -no-color -out state.tfplan
+
+            - name: Terraform core apply
+              working-directory: terraform/core
+              run: terraform apply state.tfplan
+
+            - name: Get Terraform core outputs
+              id: terraform-outputs
+              working-directory: terraform/core
+              run: |
+                  eks_cluster_kubeconfig=$(terraform output -raw eks_cluster_kubeconfig | base64)
+                  echo "EKS_CLUSTER_KUBECONFIG<<EOF" >> $GITHUB_OUTPUT
+                  echo "$eks_cluster_kubeconfig" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+
+            - name: Set K8s Kubeconfig secret
+              uses: hmanzur/actions-set-secret@v2.0.0
+              with:
+                  name: EKS_CLUSTER_KUBECONFIG
+                  value: ${{ steps.terraform-outputs.outputs.EKS_CLUSTER_KUBECONFIG }}
+                  repository: tal-rofe/talrofe
+                  token: ${{ secrets.SET_SECRETS_GH_TOKEN }}
 
 
           #**
