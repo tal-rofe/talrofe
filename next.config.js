@@ -13,6 +13,10 @@ const nextConfig = {
 		reactRemoveProperties: true,
 	},
 	pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+	images: {
+		unoptimized: true,
+	},
+	output: 'export',
 };
 
 /** @type {import('@next/mdx').NextMDXOptions} */
