@@ -1,6 +1,6 @@
 {
 	"$schema": "./node_modules/knip/schema.json",
-	"ignoreBinaries": ["only-allow", "terraform", "serve"],
+	"ignoreBinaries": ["only-allow", "terraform"],
 	"ignoreDependencies": [
 		"postcss-nesting",
 		"pnpm",
