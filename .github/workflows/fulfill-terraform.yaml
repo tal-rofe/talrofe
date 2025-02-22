@@ -1,4 +1,4 @@
-name: Fulfill Terraform
+name: Fulfill Terrafrom
 
 on:
     workflow_dispatch:
@@ -6,10 +6,9 @@ on:
         branches: [main]
         paths:
             - terraform/**
-
-concurrency:
-    group: ${{ github.workflow }}
-    cancel-in-progress: false
+            - .dockerignore
+            - docker/Dockerfile.website-prod
+            - src/**
 
 jobs:
     fulfill_terraform:
@@ -19,7 +18,7 @@ jobs:
             AWS_REGION: ${{ vars.AWS_REGION }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
+            TF_VAR_website_ecr_repository: talrofe-website
 
         steps:
             - uses: actions/checkout@v4
@@ -43,40 +42,6 @@ jobs:
               uses: hashicorp/setup-terraform@v3
               with:
                   terraform_wrapper: false
-
-          # *****
-            
-            - name: Login to Amazon ECR
-              id: login-ecr
-              uses: aws-actions/amazon-ecr-login@v2
-
-            - name: Get package.json version
-              id: package-version
-              uses: martinbeentjes/npm-get-version-action@main
-
-
-            - name: Terraform K8s init
-              working-directory: terraform/k8s
-              env:
-                  TERRAFORM_BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
-                  TERRAFORM_BACKEND_DYNAMODB_TABLE: ${{ secrets.TERRAFORM_BACKEND_DYNAMODB_TABLE }}
-              run: |
-                  terraform init \
-                  -backend-config="bucket=$TERRAFORM_BACKEND_S3_BUCKET" \
-                  -backend-config="dynamodb_table=$TERRAFORM_BACKEND_DYNAMODB_TABLE" \
-                  -backend-config="region=$AWS_REGION"
-
-            - name: Terraform K8s plan
-              working-directory: terraform/k8s
-              env:
-                  TF_VAR_website_docker_image_tag: ${{ steps.package-version.outputs.current-version }}-${{ github.sha }}
-              run: terraform plan -no-color -out state.tfplan
-
-            - name: Terraform K8s apply
-              working-directory: terraform/k8s
-              run: terraform apply state.tfplan
-
-
 
             - name: Terraform core init
               working-directory: terraform/core
@@ -114,11 +79,24 @@ jobs:
                   repository: tal-rofe/talrofe
                   token: ${{ secrets.SET_SECRETS_GH_TOKEN }}
 
+            - name: Login to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v2
 
-          #**
+            - name: Get package.json version
+              id: package-version
+              uses: martinbeentjes/npm-get-version-action@main
 
-            - name: Terraform init
-              working-directory: terraform
+            - name: Build, tag, and push image of website to Amazon ECR
+              env:
+                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                  IMAGE_TAG: ${{ steps.package-version.outputs.current-version }}-${{ github.sha }}
+              run: |
+                  docker build -t $ECR_REGISTRY/$TF_VAR_website_ecr_repository:$IMAGE_TAG -f ./docker/Dockerfile.website-prod .
+                  docker push $ECR_REGISTRY/$TF_VAR_website_ecr_repository:$IMAGE_TAG
+
+            - name: Terraform K8s init
+              working-directory: terraform/k8s
               env:
                   TERRAFORM_BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
                   TERRAFORM_BACKEND_DYNAMODB_TABLE: ${{ secrets.TERRAFORM_BACKEND_DYNAMODB_TABLE }}
@@ -128,25 +106,12 @@ jobs:
                   -backend-config="dynamodb_table=$TERRAFORM_BACKEND_DYNAMODB_TABLE" \
                   -backend-config="region=$AWS_REGION"
 
-            - name: Terraform plan
-              working-directory: terraform
+            - name: Terraform K8s plan
+              working-directory: terraform/k8s
+              env:
+                  TF_VAR_website_docker_image_tag: ${{ steps.package-version.outputs.current-version }}-${{ github.sha }}
               run: terraform plan -no-color -out state.tfplan
 
-            - name: Terraform apply
-              working-directory: terraform
+            - name: Terraform K8s apply
+              working-directory: terraform/k8s
               run: terraform apply state.tfplan
-
-            - name: Get Terraform core outputs
-              id: terraform-outputs1
-              working-directory: terraform
-              run: |
-                  app_cloudfront_distribution_id=$(terraform output -raw app_cloudfront_distribution_id)
-                  echo "APP_CLOUDFRONT_DISTRIBUTION_ID=$app_cloudfront_distribution_id" >> $GITHUB_OUTPUT
-
-            - name: Set app Cloudfront distribution ID secret
-              uses: hmanzur/actions-set-secret@v2.0.0
-              with:
-                  name: APP_CLOUDFRONT_DISTRIBUTION_ID
-                  value: ${{ steps.terraform-outputs1.outputs.APP_CLOUDFRONT_DISTRIBUTION_ID }}
-                  repository: tal-rofe/talrofe
-                  token: ${{ secrets.SET_SECRETS_GH_TOKEN }}
