@@ -5,7 +5,7 @@ module "app_s3_bucket" {
   bucket           = var.app_s3_bucket_name
   object_ownership = "BucketOwnerEnforced"
 
-  tags = merge(local.app_domain_name, {
+  tags = merge(local.common_tags, {
     Group = "Storage"
   })
 

@@ -4,7 +4,7 @@ data "aws_route53_zone" "app" {
 }
 
 resource "aws_route53_record" "cdn" {
-  zone_id = aws_route53_zone.app.zone_id
+  zone_id = data.aws_route53_zone.app.zone_id
   name    = local.app_domain_name
   type    = "A"
 
@@ -34,7 +34,7 @@ resource "aws_s3_bucket_website_configuration" "redirect_www" {
 }
 
 resource "aws_route53_record" "redirect_www" {
-  zone_id = aws_route53_zone.app.zone_id
+  zone_id = data.aws_route53_zone.app.zone_id
   name    = "www.${local.app_domain_name}"
   type    = "A"
 
