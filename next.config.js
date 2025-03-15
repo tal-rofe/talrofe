@@ -15,7 +15,6 @@ const nextConfig = {
 	pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 	images: { unoptimized: true },
 	output: 'export',
-	trailingSlash: true,
 };
 
 /** @type {import('@next/mdx').NextMDXOptions} */
