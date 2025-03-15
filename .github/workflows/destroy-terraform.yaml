@@ -42,11 +42,9 @@ jobs:
               working-directory: terraform/k8s
               env:
                   TERRAFORM_BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
-                  TERRAFORM_BACKEND_DYNAMODB_TABLE: ${{ secrets.TERRAFORM_BACKEND_DYNAMODB_TABLE }}
               run: |
                   terraform init \
                   -backend-config="bucket=$TERRAFORM_BACKEND_S3_BUCKET" \
-                  -backend-config="dynamodb_table=$TERRAFORM_BACKEND_DYNAMODB_TABLE" \
                   -backend-config="region=$AWS_REGION"
 
             - name: Terraform K8s destroy
@@ -59,11 +57,9 @@ jobs:
               working-directory: terraform/core
               env:
                   TERRAFORM_BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
-                  TERRAFORM_BACKEND_DYNAMODB_TABLE: ${{ secrets.TERRAFORM_BACKEND_DYNAMODB_TABLE }}
               run: |
                   terraform init \
                   -backend-config="bucket=$TERRAFORM_BACKEND_S3_BUCKET" \
-                  -backend-config="dynamodb_table=$TERRAFORM_BACKEND_DYNAMODB_TABLE" \
                   -backend-config="region=$AWS_REGION"
 
             - name: Terraform core destroy
