@@ -17,6 +17,7 @@ const nextConfig = {
 		unoptimized: true,
 	},
 	output: 'export',
+	trailingSlash: true,
 };
 
 /** @type {import('@next/mdx').NextMDXOptions} */
