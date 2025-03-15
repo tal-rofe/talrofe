@@ -31,7 +31,7 @@ module "app_cdn" {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     compress               = true
-    query_string           = true
+    query_string           = false
   }
 
   default_root_object = "index.html"

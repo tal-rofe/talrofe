@@ -1,7 +1,7 @@
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 const NotFoundCatchAll = () => {
-	notFound();
+	redirect('/');
 };
 
 export default NotFoundCatchAll;
