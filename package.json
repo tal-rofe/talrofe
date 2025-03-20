@@ -40,7 +40,7 @@
 		"tailwind-merge": "2.6.0",
 		"tailwindcss-animate": "1.0.7",
 		"three": "0.174.0",
-		"three-globe": "2.42.1"
+		"three-globe": "2.42.2"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "19.8.0",
