@@ -18,8 +18,8 @@ importers:
         specifier: 0.5.16
         version: 0.5.16(tailwindcss@3.4.17)
       ag-grid-community:
-        specifier: 31.3.4
-        version: 31.3.4
+        specifier: 33.2.4
+        version: 33.2.4
       clsx:
         specifier: 2.1.1
         version: 2.1.1
@@ -1033,8 +1033,11 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  ag-grid-community@31.3.4:
-    resolution: {integrity: sha512-jOxQO86C6eLnk1GdP24HB6aqaouFzMWizgfUwNY5MnetiWzz9ZaAmOGSnW/XBvdjXvC5Fpk3gSbvVKKQ7h9kBw==}
+  ag-charts-types@11.2.4:
+    resolution: {integrity: sha512-a1aQjtQ9ZH+J8BF3YcWAIHUt9ZLiL9IVZ8R5h7z2CkTNu2TPq5UlsCcF0/YZKc1M8CM0CdSNLSGQuWUwDNxAcA==}
+
+  ag-grid-community@33.2.4:
+    resolution: {integrity: sha512-7XT1+wxmMlMVXB27BJOzlft9ATB0C5HOJcCGMc8dCO2W17JXbNknVEEDGTBKoSvA4Cei8sARrRDxmPgY8mWopQ==}
 
   agentkeepalive@4.5.0:
     resolution: {integrity: sha512-5GG/5IbQQpC9FpkRGsSvZI5QYeSCzlJHdpBQntCsuTOxhKD8lqKhrleg2Yi7yvMIf82Ycmmqln9U8V9qwEiJew==}
@@ -4864,7 +4867,11 @@ snapshots:
 
   acorn@8.12.1: {}
 
-  ag-grid-community@31.3.4: {}
+  ag-charts-types@11.2.4: {}
+
+  ag-grid-community@33.2.4:
+    dependencies:
+      ag-charts-types: 11.2.4
 
   agentkeepalive@4.5.0:
     dependencies:
