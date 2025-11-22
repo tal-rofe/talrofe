@@ -1,5 +1,5 @@
 
-FROM node:20.19.1
+FROM node:20.19.4
 
 RUN npm i -g pnpm@9.15.9
 
